@@ -22,16 +22,5 @@ namespace NuGetDashboard.Boot
         {
             return _kernel;
         }
-
-        protected override Nancy.Bootstrapper.NancyInternalConfiguration InternalConfiguration
-        {
-            get
-            {
-                return NancyInternalConfiguration.WithOverrides(x =>
-                {
-                    x.ResponseProcessors = new[] { typeof(JsonProcessor) };
-                });
-            }
-        }
     }
 }

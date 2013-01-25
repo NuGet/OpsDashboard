@@ -17,6 +17,10 @@ namespace NuGetDashboard.Modules
             Get["/api/v1/jobs"] = _ =>
                 // Get jobs status json
                 jobStatus.GetJobStatusJson();
+
+            Get["/(.*)"] = _ =>
+                // Just show the app
+                View["Default"];
         }
     }
 }
