@@ -10,6 +10,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.XPath;
 using Newtonsoft.Json;
+using NuGetDashboard.Infrastructure;
 using NuGetDashboard.Model;
 using NuGetDashboard.Services;
 
@@ -17,16 +18,8 @@ namespace NuGetDashboard.Modules
 {
     public class MainModule : Nancy.NancyModule
     {
-        public MainModule(PackageService packages, JobStatusService jobStatus, ConfigurationService configuration)
+        public MainModule(AuthenticationService authService, ConfigurationService configuration)
         {
-            Get["/api/v1/packages"] = _ =>
-                // Get a list of packages from blob storage
-                packages.GetAll();
-
-            Get["/api/v1/jobs"] = _ =>
-                // Get jobs status json
-                jobStatus.GetJobStatusJson();
-
             Post["/"] = _ =>
             {
                 // Get the token
@@ -36,32 +29,31 @@ namespace NuGetDashboard.Modules
                     throw new InvalidOperationException("No token response!");
                 }
 
-                // Pull out the binary token
-                Dictionary<string, string> tokenData;
-                using (var reader = new StringReader(token))
-                {
-                    // Grab the node
-                    var doc = new XPathDocument(reader);
-                    var nav = doc.CreateNavigator();
-                    XmlNamespaceManager ns = new XmlNamespaceManager(nav.NameTable);
-                    ns.AddNamespace("t", "http://schemas.xmlsoap.org/ws/2005/02/trust");
-                    ns.AddNamespace("wsse", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
-                    var secTokenNode = nav.SelectSingleNode("/t:RequestSecurityTokenResponse/t:RequestedSecurityToken/wsse:BinarySecurityToken", ns);
+                // Process the token
+                var userAccount = authService.ProcessRecievedToken(token);
 
-                    // Pull the token out and parse it
-                    string decoded = WebUtility.UrlDecode(
-                        Encoding.UTF8.GetString(
-                            Convert.FromBase64String(secTokenNode.InnerXml)));
-                    string decodedJWT = JWT.JsonWebToken.Decode(decoded, configuration.TokenSigningCert);
-                    tokenData = JsonConvert.DeserializeObject<Dictionary<string, string>>(decodedJWT);
-                }
+                // Issue a session token
+                var sessionToken = authService.IssueSessionToken(userAccount);
+                Context.CurrentUser = new DashboardUserIdentity(sessionToken);
+                Context.Items["IssueAuthCookie"] = true;
 
-                return View["Default"];
+                // Render the main view
+                return View["Default", new DefaultViewModel(configuration, userAccount)];
             };
 
             Get["/(.*)"] = _ =>
+            {
+                // Check for a user
+                UserAccount acct = null;
+                if (Context.CurrentUser != null)
+                {
+                    var id = (DashboardUserIdentity)Context.CurrentUser;
+                    acct = id.Token.User;
+                }
+
                 // Just show the app
-                View["Default", new DefaultViewModel(configuration)];
+                return View["Default", new DefaultViewModel(configuration, acct)];
+            };
         }
     }
 }

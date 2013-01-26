@@ -1,5 +1,9 @@
 ﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<NuGetDashboard.Model.DefaultViewModel>
 @{
+    var tokenJson = "";
+    if(Model.User != null) {
+        tokenJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model.User);
+    }
 }
 
 <!DOCTYPE html>
@@ -12,7 +16,7 @@
     <link href="Content/font-awesome.min.css" rel="stylesheet" />
     <link href="Content/Master.css" rel="stylesheet" />
 </head>
-<body>
+<body data-user="@tokenJson">
     <nav id="site-header" class="navbar navbar-static-top">
         <div class="navbar-inner">
             <ul class="nav pull-right">

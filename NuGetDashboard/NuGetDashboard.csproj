@@ -191,16 +191,24 @@
     <Compile Include="Boot\AppModule.cs" />
     <Compile Include="Boot\DashboardNancyBootstrapper.cs" />
     <Compile Include="Boot\Startup.cs" />
+    <Compile Include="Infrastructure\DashboardUserIdentity.cs" />
     <Compile Include="Infrastructure\JWT.cs" />
     <Compile Include="Model\DefaultViewModel.cs" />
     <Compile Include="Model\PackageFile.cs" />
+    <Compile Include="Model\UserAccount.cs" />
     <Compile Include="Modules\MainModule.cs" />
+    <Compile Include="Modules\SecureModule.cs" />
+    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\AzureBlobJobStatusService.cs" />
     <Compile Include="Services\AzureBlobPackageService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\DataProtectionService.cs" />
+    <Compile Include="Services\DefaultAuthenticationService.cs" />
     <Compile Include="Services\JobStatusService.cs" />
+    <Compile Include="Services\MachineKeyDataProtectionService.cs" />
     <Compile Include="Services\PackageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SessionToken.cs" />
     <Compile Include="Services\WebConfigConfigurationService.cs" />
   </ItemGroup>
   <ItemGroup>

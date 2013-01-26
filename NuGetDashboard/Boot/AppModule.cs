@@ -16,10 +16,20 @@ namespace NuGetDashboard.Boot
                   .InSingletonScope();
 
             Kernel.Bind<PackageService>()
-                  .To<AzureBlobPackageService>();
+                  .To<AzureBlobPackageService>()
+                  .InSingletonScope();
 
             Kernel.Bind<JobStatusService>()
-                  .To<AzureBlobJobStatusService>();
+                  .To<AzureBlobJobStatusService>()
+                  .InSingletonScope();
+
+            Kernel.Bind<AuthenticationService>()
+                  .To<DefaultAuthenticationService>()
+                  .InSingletonScope();
+
+            Kernel.Bind<DataProtectionService>()
+                  .To<MachineKeyDataProtectionService>()
+                  .InSingletonScope();
         }
     }
 }
