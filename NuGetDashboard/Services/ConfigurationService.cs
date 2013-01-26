@@ -13,6 +13,9 @@ namespace NuGetDashboard.Services
         public virtual string OpsStatusConnectionString { get { return GetSetting("AzureOpsStatusConnectionString"); } }
         public virtual string OpsStatusContainerName { get { return GetSetting("OpsStatusContainerName"); } }
 
+        public virtual string LoginPageUrl { get { return GetSetting("LoginPageUrl"); } }
+        public virtual string TokenSigningCert { get { return GetSetting("TokenSigningCert"); } }
+
         protected abstract string GetSetting(string name);
     }
 }

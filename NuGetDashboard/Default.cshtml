@@ -1,4 +1,5 @@
-﻿@{
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<NuGetDashboard.Model.DefaultViewModel>
+@{
 }
 
 <!DOCTYPE html>
@@ -14,6 +15,9 @@
 <body>
     <nav id="site-header" class="navbar navbar-static-top">
         <div class="navbar-inner">
+            <ul class="nav pull-right">
+                <li><a href="@Model.Configuration.LoginPageUrl">Administrator Login</a></li>
+            </ul>
             <a class="brand" href="/">NuGet Gallery Dashboard</a>
             <ul class="nav">
                 <li data-menu="app-packages"><a href="app-packages"><i class="icon-cloud"></i>Site Packages</a></li>
