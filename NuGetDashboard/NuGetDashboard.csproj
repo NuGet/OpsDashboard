@@ -152,13 +152,13 @@
     </Content>
     <Content Include="js\app\boot.js" />
     <Content Include="js\app\dashboard.js" />
-    <Content Include="js\app\fx\modular.js" />
-    <Content Include="js\app\home\index.js" />
+    <Content Include="js\app\deployments\index.js" />
     <Content Include="js\lib\backbone.js" />
     <Content Include="js\lib\backbone.min.js" />
     <Content Include="js\lib\bootstrap.js" />
     <Content Include="js\lib\bootstrap.min.js" />
     <None Include="js\lib\jquery-1.9.0.intellisense.js" />
+    <Content Include="js\lib\backbone-subroute.js" />
     <Content Include="js\lib\jquery-1.9.0.js" />
     <Content Include="js\lib\jquery-1.9.0.min.js" />
     <Content Include="js\lib\kblib\knockback-defaults.js" />

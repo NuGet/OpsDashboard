@@ -11,10 +11,10 @@
 <head>
     <title>NuGet Gallery Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="Content/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="Content/font-awesome.min.css" rel="stylesheet" />
-    <link href="Content/Master.css" rel="stylesheet" />
+    <link href="/public/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/public/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/public/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/public/css/Master.css" rel="stylesheet" />
 </head>
 <body data-user="@tokenJson">
     <nav id="site-header" class="navbar navbar-static-top">
@@ -24,67 +24,16 @@
             </ul>
             <a class="brand" href="/">NuGet Gallery Dashboard</a>
             <ul class="nav">
-                <li data-menu="app-packages"><a href="app-packages"><i class="icon-cloud"></i>Site Packages</a></li>
-                <li data-menu="ops"><a href="ops"><i class="icon-cogs"></i> Ops Status</a></li>
+                <li data-menu="app-packages"><a href="/deployments/"><i class="icon-cloud"></i>Site Packages</a></li>
+                <li data-menu="ops"><a href="/operations/ "><i class="icon-cogs"></i> Ops Status</a></li>
             </ul>
         </div>
     </nav>
 
     <div id="root-container" class="container-fluid">
-        <div class="page" data-view="app-packages">
-            <h2>Site Packages</h2>
-            <div class="well">
-                <p>The following are the site packages currently available in storage</p>
-                <div data-bind="if: isLoading()">
-                    <span><i class="icon-spinner icon-spin"></i> Loading...</span>
-                </div>
-                <ul class="nav nav-list" data-bind="if: !isLoading()">
-                    <li data-bind="foreach: items">
-                        <a data-bind="attr: {href: url}">
-                            <i class="icon-cloud-download"></i>
-                            <span data-bind="text: name" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="page" data-view="ops">
-            <h2>Operations Status</h2>
-            <div class="well">
-                <p>Status of NuGet Gallery Operations Tasks</p>
-                <div data-bind="if: isLoading()">
-                    <span><i class="icon-spinner icon-spin"></i> Loading...</span>
-                </div>
-                <div data-bind="if: !isLoading()">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Job</th>
-                                <th>PID</th>
-                                <th>Time (UTC)</th>
-                                <th>Duration</th>
-                                <th>Status</th>
-                                <th>Message</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- ko foreach: jobs -->
-                            <tr data-bind="foreach: runs">
-                                <td data-bind="text: $parent.jobName" />
-                                <td data-bind="text: pid" />
-                                <td data-bind="text: displayDate" />
-                                <td data-bind="text: duration" />
-                                <td data-bind="text: status" />
-                                <td data-bind="text: message" />
-                            </tr>
-                            <!-- /ko -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
-    <script src="js/lib/require.js" data-main="js/app/boot"></script>
+    <script src="/public/lib/require.js" data-main="/public/app/boot"></script>
 </body>
 </html>
