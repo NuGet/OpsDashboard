@@ -1,7 +1,7 @@
 ﻿// Configure require js
 requirejs.config({
     // By default, load unprefixed modules from js/lib
-    baseUrl: 'js/lib',
+    baseUrl: '../lib',
     paths: {
         // Load "app/" prefixed modules from js/app
         app: '../app',
@@ -22,8 +22,8 @@ requirejs.config({
 });
 
 // Start the main app
-requirejs(['jquery', 'knockback'],
-function  ($       , kb           ) {
+requirejs(['jquery', 'knockback', 'app/fx/module'],
+function  ($       , kb         , Module) {
     // Schedule startup code
     $(function () {
         // Start the router
@@ -32,9 +32,9 @@ function  ($       , kb           ) {
             pushState: true
         });
 
-        kb.Backbone.history.route('', function () {
-            
-        });
+        // Create module routes
+        kb.Backbone.history.route('app-packages/*rest', module('app-packages'));
+        kb.Backbone.history.route('*rest', module('home'));
 
         // Hijack internal links
         $(document.body).on('click', 'a:not([data-link="exterior"],[href="#"],[href^="http:"],[href^="https:"],[href^="//"]),a[data-link="interior"]', function (evt) {

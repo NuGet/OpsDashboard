@@ -152,6 +152,8 @@
     </Content>
     <Content Include="js\app\boot.js" />
     <Content Include="js\app\dashboard.js" />
+    <Content Include="js\app\fx\modular.js" />
+    <Content Include="js\app\home\index.js" />
     <Content Include="js\lib\backbone.js" />
     <Content Include="js\lib\backbone.min.js" />
     <Content Include="js\lib\bootstrap.js" />
@@ -179,6 +181,7 @@
     <Content Include="js\lib\knockback.min.js" />
     <Content Include="js\lib\knockout-2.2.1.debug.js" />
     <Content Include="js\lib\knockout-2.2.1.js" />
+    <None Include="js\lib\require.intellisense.js" />
     <Content Include="js\lib\require.js" />
     <Content Include="js\lib\underscore.js" />
     <Content Include="js\lib\underscore.min.js" />
