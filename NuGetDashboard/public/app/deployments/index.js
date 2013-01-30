@@ -37,7 +37,7 @@
 
 
     return Modular.module({
-        '': function () {
+        'available': function () {
             var vm = new PackagesViewModel();
             Modular.showView('packages', vm);
             setTimeout(vm.refresh, 0);

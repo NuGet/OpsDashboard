@@ -78,7 +78,7 @@ namespace NuGetDashboard.Services
             using(var rdr = new BinaryReader(strm))
             {
                 // Discard the prefix nonce
-                rdr.ReadBytes(4);
+                rdr.ReadBytes(16);
 
                 // Grab the data
                 string userName = rdr.ReadString();
@@ -86,10 +86,6 @@ namespace NuGetDashboard.Services
                 string lastName = rdr.ReadString();
                 DateTime expiresUtc = DateTime.FromBinary(rdr.ReadInt64());
                 token = new SessionToken(new UserAccount(userName, firstName, lastName), expiresUtc);
-
-                // Discard the suffix nonce
-                // But read it to make sure it's there
-                rdr.ReadBytes(4);
             }
 
             // Check expiry
@@ -106,7 +102,7 @@ namespace NuGetDashboard.Services
             {
                 token.ExpiresUtc = DateTime.UtcNow.AddMinutes(30);
             }
-            byte[] data = new byte[8];
+            byte[] data = new byte[16];
             using (var rng = new RNGCryptoServiceProvider())
             {
                 rng.GetBytes(data);
@@ -115,12 +111,11 @@ namespace NuGetDashboard.Services
             using(var strm = new MemoryStream())
             using (var writer = new BinaryWriter(strm))
             {
-                writer.Write(data, 0, 4);
+                writer.Write(data);
                 writer.Write(token.User.UserName);
                 writer.Write(token.User.FirstName);
                 writer.Write(token.User.LastName);
                 writer.Write(token.ExpiresUtc.ToBinary());
-                writer.Write(data, 4, 4);
                 writer.Flush();
                 strm.Flush();
 

@@ -20,12 +20,14 @@
     <nav id="site-header" class="navbar navbar-static-top">
         <div class="navbar-inner">
             <ul class="nav pull-right">
-                <li><a href="@Model.Configuration.LoginPageUrl">Administrator Login</a></li>
+                <li data-bind="if: !isLoggedIn()"><a href="@Model.Configuration.LoginPageUrl">Administrator Login</a></li>
+                <li data-bind="if: isLoggedIn()"><span class="nav-link-like" data-bind="text: displayName"></span></li>
             </ul>
             <a class="brand" href="/">NuGet Gallery Dashboard</a>
             <ul class="nav">
-                <li data-menu="app-packages"><a href="/deployments/"><i class="icon-cloud"></i>Site Packages</a></li>
-                <li data-menu="ops"><a href="/operations/ "><i class="icon-cogs"></i> Ops Status</a></li>
+                <!-- ko foreach: menuItems -->
+                <li data-bind="css: { active: isActive }"><a data-bind="attr: { href: url }, if: isVisible"><i data-bind="attr: { class: icon }"></i><span data-bind="text: title"></span></a></li>
+                <!-- /ko -->
             </ul>
         </div>
     </nav>

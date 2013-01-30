@@ -134,63 +134,57 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-responsive.css" />
-    <Content Include="Content\bootstrap-responsive.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\font-awesome-ie7.min.css" />
-    <Content Include="Content\font-awesome.css" />
-    <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\font\fontawesome-webfont.svg" />
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
-    <Content Include="Content\Master.css">
-      <DependentUpon>Master.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Master.min.css">
-      <DependentUpon>Master.less</DependentUpon>
-    </Content>
-    <Content Include="js\app\boot.js" />
-    <Content Include="js\app\dashboard.js" />
-    <Content Include="js\app\deployments\index.js" />
-    <Content Include="js\lib\backbone.js" />
-    <Content Include="js\lib\backbone.min.js" />
-    <Content Include="js\lib\bootstrap.js" />
-    <Content Include="js\lib\bootstrap.min.js" />
-    <None Include="js\lib\jquery-1.9.0.intellisense.js" />
-    <Content Include="js\lib\backbone-subroute.js" />
-    <Content Include="js\lib\jquery-1.9.0.js" />
-    <Content Include="js\lib\jquery-1.9.0.min.js" />
-    <Content Include="js\lib\kblib\knockback-defaults.js" />
-    <Content Include="js\lib\kblib\knockback-defaults.min.js" />
-    <Content Include="js\lib\kblib\knockback-formatting.js" />
-    <Content Include="js\lib\kblib\knockback-formatting.min.js" />
-    <Content Include="js\lib\kblib\knockback-localization.js" />
-    <Content Include="js\lib\kblib\knockback-localization.min.js" />
-    <Content Include="js\lib\kblib\knockback-statistics.js" />
-    <Content Include="js\lib\kblib\knockback-statistics.min.js" />
-    <Content Include="js\lib\kblib\knockback-triggering.js" />
-    <Content Include="js\lib\kblib\knockback-triggering.min.js" />
-    <Content Include="js\lib\knockback-core-stack.js" />
-    <Content Include="js\lib\knockback-core-stack.min.js" />
-    <Content Include="js\lib\knockback-core.js" />
-    <Content Include="js\lib\knockback-core.min.js" />
-    <Content Include="js\lib\knockback-full-stack.js" />
-    <Content Include="js\lib\knockback-full-stack.min.js" />
-    <Content Include="js\lib\knockback.js" />
-    <Content Include="js\lib\knockback.min.js" />
-    <Content Include="js\lib\knockout-2.2.1.debug.js" />
-    <Content Include="js\lib\knockout-2.2.1.js" />
-    <None Include="js\lib\require.intellisense.js" />
-    <Content Include="js\lib\require.js" />
-    <Content Include="js\lib\underscore.js" />
-    <Content Include="js\lib\underscore.min.js" />
-    <Content Include="js\_references.js" />
-    <Content Include="Content\font\fontawesome-webfont.woff" />
-    <Content Include="Content\font\fontawesome-webfont.ttf" />
-    <Content Include="Content\font\fontawesome-webfont.eot" />
-    <Content Include="Content\font\FontAwesome.otf" />
-    <Content Include="js\lib\jquery-1.9.0.min.map" />
+    <Content Include="public\app\boot.js" />
+    <Content Include="public\app\dashboard.js" />
+    <Content Include="public\app\deployments\index.js" />
+    <Content Include="public\app\deployments\packages.html" />
+    <Content Include="public\app\modular.js" />
+    <Content Include="public\css\bootstrap-responsive.css" />
+    <Content Include="public\css\bootstrap-responsive.min.css" />
+    <Content Include="public\css\bootstrap.css" />
+    <Content Include="public\css\bootstrap.min.css" />
+    <Content Include="public\css\font-awesome-ie7.min.css" />
+    <Content Include="public\css\font-awesome.css" />
+    <Content Include="public\css\font-awesome.min.css" />
+    <Content Include="public\css\Master.css" />
+    <Content Include="public\css\Master.min.css" />
+    <Content Include="public\font\fontawesome-webfont.svg" />
+    <Content Include="public\images\glyphicons-halflings-white.png" />
+    <Content Include="public\images\glyphicons-halflings.png" />
+    <Content Include="public\lib\backbone-subroute.js" />
+    <Content Include="public\lib\backbone.js" />
+    <Content Include="public\lib\backbone.min.js" />
+    <Content Include="public\lib\bootstrap.js" />
+    <Content Include="public\lib\bootstrap.min.js" />
+    <None Include="public\lib\jquery-1.9.0.intellisense.js" />
+    <Content Include="public\lib\jquery-1.9.0.js" />
+    <Content Include="public\lib\jquery-1.9.0.min.js" />
+    <Content Include="public\lib\kblib\knockback-defaults.js" />
+    <Content Include="public\lib\kblib\knockback-defaults.min.js" />
+    <Content Include="public\lib\kblib\knockback-formatting.js" />
+    <Content Include="public\lib\kblib\knockback-formatting.min.js" />
+    <Content Include="public\lib\kblib\knockback-localization.js" />
+    <Content Include="public\lib\kblib\knockback-localization.min.js" />
+    <Content Include="public\lib\kblib\knockback-statistics.js" />
+    <Content Include="public\lib\kblib\knockback-statistics.min.js" />
+    <Content Include="public\lib\kblib\knockback-triggering.js" />
+    <Content Include="public\lib\kblib\knockback-triggering.min.js" />
+    <Content Include="public\lib\knockback-core-stack.js" />
+    <Content Include="public\lib\knockback-core-stack.min.js" />
+    <Content Include="public\lib\knockback-core.js" />
+    <Content Include="public\lib\knockback-core.min.js" />
+    <Content Include="public\lib\knockback-full-stack.js" />
+    <Content Include="public\lib\knockback-full-stack.min.js" />
+    <Content Include="public\lib\knockback.js" />
+    <Content Include="public\lib\knockback.min.js" />
+    <Content Include="public\lib\knockout-2.2.1.debug.js" />
+    <Content Include="public\lib\knockout-2.2.1.js" />
+    <None Include="public\lib\require.intellisense.js" />
+    <Content Include="public\lib\require.js" />
+    <Content Include="public\lib\text.js" />
+    <Content Include="public\lib\underscore.js" />
+    <Content Include="public\lib\underscore.min.js" />
+    <Content Include="public\_references.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -218,10 +212,15 @@
     <Compile Include="Services\WebConfigConfigurationService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.cshtml" />
-    <Content Include="Content\Master.less" />
+    <None Include="Default.cshtml" />
     <Content Include="packages.config" />
     <Content Include="App_Data\settings.private.json" />
+    <Content Include="public\css\Master.less" />
+    <Content Include="public\font\fontawesome-webfont.eot" />
+    <Content Include="public\font\fontawesome-webfont.ttf" />
+    <Content Include="public\font\fontawesome-webfont.woff" />
+    <Content Include="public\font\FontAwesome.otf" />
+    <Content Include="public\lib\jquery-1.9.0.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

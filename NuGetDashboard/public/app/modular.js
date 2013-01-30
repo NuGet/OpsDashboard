@@ -18,7 +18,7 @@
                 }
             }
             var ModuleRouter = Backbone.SubRoute.extend(baseObject);
-            new ModuleRouter(modulePrefix);
+            new ModuleRouter(modulePrefix, { createTrailingSlashRoutes: true });
         };
     }
 
