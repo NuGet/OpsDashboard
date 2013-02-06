@@ -42,6 +42,7 @@ namespace NuGetGallery.Dashboard.App_Start
             var kernel = new StandardKernel(new AppModule());
             kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+            ServiceProvider.Instance = kernel;
             return kernel;
         }
     }

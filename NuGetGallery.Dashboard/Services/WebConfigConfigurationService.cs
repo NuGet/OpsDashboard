@@ -14,16 +14,11 @@ namespace NuGetGallery.Dashboard.Services
 
         public WebConfigConfigurationService()
         {
-            // Load the private settings overlay
-            var ctxt = HttpContext.Current;
-            if (ctxt != null)
+            string mapped = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"App_Data\Settings.private.json");
+            if (!String.IsNullOrEmpty(mapped) && File.Exists(mapped))
             {
-                string mapped = ctxt.Server.MapPath("/App_Data/settings.private.json");
-                if (!String.IsNullOrEmpty(mapped) && File.Exists(mapped))
-                {
-                    using(StreamReader rdr = new StreamReader(mapped)) {
-                        _overrideSettings = JsonConvert.DeserializeObject<Dictionary<string, string>>(rdr.ReadToEnd());
-                    }
+                using(StreamReader rdr = new StreamReader(mapped)) {
+                    _overrideSettings = JsonConvert.DeserializeObject<Dictionary<string, string>>(rdr.ReadToEnd());
                 }
             }
         }

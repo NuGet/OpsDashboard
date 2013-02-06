@@ -13,10 +13,11 @@ namespace NuGetGallery.Dashboard.Services
         public virtual string OpsStatusConnectionString { get { return GetSetting("AzureOpsStatusConnectionString"); } }
         public virtual string OpsStatusContainerName { get { return GetSetting("OpsStatusContainerName"); } }
 
+        public virtual string LoginUrl { get { return GetSetting("LoginUrl"); } }
         public virtual string AudienceUrl { get { return GetSetting("AudienceUrl"); } }
         public virtual string AuthenticationRealm { get { return GetSetting("AuthenticationRealm"); } }
         public virtual string AuthenticationIssuer { get { return GetSetting("AuthenticationIssuer"); } }
-        public virtual string AuthenticationCertificate { get { return GetSetting("AuthenticationCertificate"); } }
+        public virtual string TokenCertificateThumbprint { get { return GetSetting("TokenCertificateThumbprint"); } }
 
         protected abstract string GetSetting(string name);
     }

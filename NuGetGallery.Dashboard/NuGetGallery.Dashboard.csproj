@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -141,6 +141,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AppModule.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\ServiceProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -149,14 +150,11 @@
     <Compile Include="Infrastructure\JWT.cs" />
     <Compile Include="ViewModel\LayoutModel.cs" />
     <Compile Include="ViewModel\PackageFile.cs" />
-    <Compile Include="ViewModel\UserAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\AzureBlobJobStatusService.cs" />
     <Compile Include="Services\AzureBlobPackageService.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\DataProtectionService.cs" />
-    <Compile Include="Services\DefaultAuthenticationService.cs" />
     <Compile Include="Services\JobStatusService.cs" />
     <Compile Include="Services\MachineKeyDataProtectionService.cs" />
     <Compile Include="Services\PackageService.cs" />
@@ -179,7 +177,7 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Master.less" />
-    <Content Include="App_Data\Settings.private.json" />
+    <Content Include="App_Data\settings.private.json" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -232,7 +230,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>25734</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:20063/</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

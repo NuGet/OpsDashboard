@@ -1,46 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using NuGetGallery.Dashboard.ViewModel;
 
 namespace NuGetGallery.Dashboard.Services
 {
-    public class UserSession : IPrincipal, IIdentity
+    public class UserSession
     {
-        public UserAccount User { get; private set; }
-        public DateTime ExpiresUtc { get; set; }
+        private ClaimsPrincipal _principal;
 
-        public UserSession(UserAccount user, DateTime expiresUtc)
+        public bool Authenticated { get { return _principal != null && _principal.Identity != null && _principal.Identity.IsAuthenticated; } }
+        public string DisplayName { get; private set; }
+
+        public UserSession(ClaimsPrincipal principal)
         {
-            User = user;
-            ExpiresUtc = expiresUtc;
+            _principal = principal;
+
+            if (_principal != null)
+            {
+                LoadProperties();
+            }
         }
 
-        public IIdentity Identity
+        private void LoadProperties()
         {
-            get { return this; }
+            DisplayName = String.Format("{0} {1}",
+                _principal.ClaimValue(ClaimTypes.GivenName),
+                _principal.ClaimValue(ClaimTypes.Surname));
+
+        }
+    }
+
+    public static class PrincipalExtensions
+    {
+        public static UserSession AsUserSession(this IPrincipal self)
+        {
+            return new UserSession(self as ClaimsPrincipal);
         }
 
-        public bool IsInRole(string role)
+        public static string ClaimValue(this ClaimsPrincipal self, string claimUrl)
         {
-            return false;
-        }
-
-        public string AuthenticationType
-        {
-            get { return "Session"; }
-        }
-
-        public bool IsAuthenticated
-        {
-            get { return true; }
-        }
-
-        public string Name
-        {
-            get { return User.UserName; }
+            if (self == null)
+            {
+                return null;
+            }
+            Claim claim = self.Claims.Where(c => String.Equals(c.Type, claimUrl, StringComparison.Ordinal)).FirstOrDefault();
+            if (claim == null)
+            {
+                return null;
+            }
+            return claim.Value;
         }
     }
 }

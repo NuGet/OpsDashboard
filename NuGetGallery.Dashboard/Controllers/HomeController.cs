@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Services;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,37 +12,17 @@ namespace NuGetGallery.Dashboard.Controllers
     public class HomeController : Controller
     {
         private readonly ConfigurationService _configuration;
-        private readonly AuthenticationService _auth;
 
-        public HomeController(ConfigurationService configuration, AuthenticationService auth)
+        public HomeController(ConfigurationService configuration)
         {
             _configuration = configuration;
-            _auth = auth;
         }
 
         //
         // GET: /Home/
-        [HttpGet]
-        [ActionName("Index")]
-        public ActionResult GetIndex()
+        public ActionResult Index()
         {
-            return View(new LayoutModel(_configuration.LoginPageUrl, HttpContext.User as UserSession));
-        }
-
-        [HttpPost]
-        [ActionName("Index")]
-        [ValidateInput(false)]
-        public ActionResult PostIndex(string wresult)
-        {
-            // Parse a JWT token
-            var user = _auth.ProcessRecievedToken(wresult);
-
-            // Issue a session token and set it as the current user
-            var session = _auth.IssueSessionToken(user);
-            HttpContext.User = session;
-
-            // Run the get code
-            return GetIndex();
+            return View(new LayoutModel(_configuration.LoginUrl, HttpContext.User.AsUserSession()));
         }
     }
 }
