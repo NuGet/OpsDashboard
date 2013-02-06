@@ -1,14 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetDashboard", "NuGetDashboard\NuGetDashboard.csproj", "{3DE516F7-16C3-4E03-8E6C-347A0BB61ED3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E229A174-1E3C-42C6-9BAA-1F61DE5083A7}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetDashboard_old", "NuGetDashboard_old\NuGetDashboard_old.csproj", "{3DE516F7-16C3-4E03-8E6C-347A0BB61ED3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGallery.Dashboard", "NuGetGallery.Dashboard\NuGetGallery.Dashboard.csproj", "{5E1773E3-C874-4FE0-9014-6AB84DE4F316}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{3DE516F7-16C3-4E03-8E6C-347A0BB61ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DE516F7-16C3-4E03-8E6C-347A0BB61ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DE516F7-16C3-4E03-8E6C-347A0BB61ED3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

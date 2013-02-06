@@ -1,0 +1,37 @@
+﻿@model NuGetGallery.Dashboard.ViewModel.LayoutModel
+@{
+    var tokenJson = "";
+    if(Model.User != null) {
+        tokenJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model.User);
+    }
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>NuGet Gallery Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Content/Master.css" rel="stylesheet" />
+</head>
+<body data-user="@tokenJson">
+    <nav id="site-header" class="navbar navbar-static-top">
+        <div class="navbar-inner">
+            <ul class="nav pull-right">
+                @if(Model.User == null) {
+                <li><a href="@Model.LoginUrl">Administrator Login</a></li>
+                } else {
+                <li><span class="nav-link-like"></span></li>
+                }
+            </ul>
+            <a class="brand" href="/">NuGet Gallery Dashboard</a>
+        </div>
+    </nav>
+
+    <div id="root-container" class="container-fluid">
+        @RenderBody()
+    </div>
+</body>
+</html>
