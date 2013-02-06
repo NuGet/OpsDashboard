@@ -69,6 +69,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.identitymodel.services" />
     <Reference Include="System.Spatial, Version=5.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.0.2\lib\net40\System.Spatial.dll</HintPath>
@@ -143,6 +145,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\DashboardUserPrincipal.cs" />
     <Compile Include="Infrastructure\JWT.cs" />
     <Compile Include="ViewModel\LayoutModel.cs" />
     <Compile Include="ViewModel\PackageFile.cs" />
@@ -157,7 +160,7 @@
     <Compile Include="Services\JobStatusService.cs" />
     <Compile Include="Services\MachineKeyDataProtectionService.cs" />
     <Compile Include="Services\PackageService.cs" />
-    <Compile Include="Services\SessionToken.cs" />
+    <Compile Include="Services\UserSession.cs" />
     <Compile Include="Services\WebConfigConfigurationService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +179,7 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Master.less" />
+    <Content Include="App_Data\Settings.private.json" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -194,9 +198,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -228,7 +230,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>25734</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:20063/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

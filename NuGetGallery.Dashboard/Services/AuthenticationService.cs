@@ -8,9 +8,6 @@ namespace NuGetGallery.Dashboard.Services
 {
     public abstract class AuthenticationService
     {
-        public abstract UserAccount ProcessRecievedToken(string token);
-        public abstract SessionToken IssueSessionToken(UserAccount userAccount);
-        public abstract SessionToken DecodeSessionToken(string encoded);
-        public abstract string EncodeSessionToken(SessionToken token, bool renew);
+        public abstract UserAccount Login(string token);
     }
 }

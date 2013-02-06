@@ -23,7 +23,7 @@
                 @if(Model.User == null) {
                 <li><a href="@Model.LoginUrl">Administrator Login</a></li>
                 } else {
-                <li><span class="nav-link-like"></span></li>
+                <li><a href="#">@Model.User.FirstName @Model.User.LastName</a></li>
                 }
             </ul>
             <a class="brand" href="/">NuGet Gallery Dashboard</a>
