@@ -18,4 +18,6 @@ TestResults
 *.log
 packages/*
 *.userprefs
+
+App_Data/*
 *.private.json
