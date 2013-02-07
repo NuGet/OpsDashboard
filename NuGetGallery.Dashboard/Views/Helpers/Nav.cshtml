@@ -1,0 +1,34 @@
+﻿@* Generator: MvcHelper *@
+@functions {
+    private static object _currentAreaKey = new object();
+    
+    public new static WebViewPage CurrentPage {
+        get { return (WebViewPage)HelperPage.CurrentPage; }
+    }
+}
+
+@helper AreaMenu(string areaName, string areaTitle, string areaIcon, Func<object, HelperResult> menuContent) {
+    var activeClass = String.Equals((string)CurrentPage.ViewContext.RouteData.DataTokens["area"], areaName, StringComparison.OrdinalIgnoreCase) ? "active" : null;
+    <li class="dropdown @activeClass">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="@areaIcon"></i> @areaTitle <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            @{ 
+                var oldArea = CurrentPage.Context.Items[_currentAreaKey];
+                CurrentPage.Context.Items[_currentAreaKey] = areaName; 
+                @menuContent(null)
+                CurrentPage.Context.Items[_currentAreaKey] = oldArea;
+            }
+        </ul>
+    </li>
+}
+
+@helper MenuAction(string actionName, string controllerName, string icon, string title) {
+    var areaName = (string)CurrentPage.Context.Items[_currentAreaKey];
+    var active =
+        (String.Equals(actionName, (string)CurrentPage.ViewContext.RouteData.Values["action"], StringComparison.OrdinalIgnoreCase) &&
+         String.Equals(controllerName, (string)CurrentPage.ViewContext.RouteData.Values["controller"], StringComparison.OrdinalIgnoreCase) &&
+         String.Equals(areaName, (string)CurrentPage.ViewContext.RouteData.DataTokens["area"], StringComparison.OrdinalIgnoreCase)) 
+         ? "active" 
+         : null;
+    <li class="@active"><a href="@CurrentPage.Url.Action(actionName, controllerName, new { area = areaName })"><i class="@icon"></i> @title</a></li>
+}

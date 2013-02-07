@@ -41,6 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Glimpse.Core, Version=0.87.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Glimpse.0.87\lib\net40\Glimpse.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -142,10 +146,13 @@
     <Compile Include="App_Start\AppModule.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\ServiceProvider.cs" />
+    <Compile Include="Areas\SiteStatus\SiteStatusAreaRegistration.cs" />
+    <Compile Include="Areas\SiteStatus\Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\BaseController.cs" />
     <Compile Include="Infrastructure\DashboardUserPrincipal.cs" />
     <Compile Include="Infrastructure\JWT.cs" />
     <Compile Include="ViewModel\LayoutModel.cs" />
@@ -160,11 +167,17 @@
     <Compile Include="Services\PackageService.cs" />
     <Compile Include="Services\UserSession.cs" />
     <Compile Include="Services\WebConfigConfigurationService.cs" />
+    <Compile Include="Views\Helpers\Nav.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Nav.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="App_Readme\glimpse.readme.txt" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -178,6 +191,14 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Master.less" />
     <Content Include="App_Data\settings.private.json" />
+    <Content Include="Areas\SiteStatus\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\SiteStatus\Views\_ViewStart.cshtml" />
+    <Content Include="Views\Helpers\Nav.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Nav.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -195,8 +216,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Areas\SiteStatus\Views\Errors\List.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\SiteStatus\Models\" />
+    <Folder Include="Areas\SiteStatus\Views\Shared\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -230,7 +255,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>25734</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44300/</IISUrl>
+          <IISUrl>http://localhost:20202/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

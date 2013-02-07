@@ -4,25 +4,21 @@ using System.IdentityModel.Services;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NuGetGallery.Dashboard.Infrastructure;
 using NuGetGallery.Dashboard.Services;
 using NuGetGallery.Dashboard.ViewModel;
 
 namespace NuGetGallery.Dashboard.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ConfigurationService _configuration;
-
-        public HomeController(ConfigurationService configuration)
-        {
-            _configuration = configuration;
-        }
+        public HomeController(ConfigurationService configuration) : base(configuration) {}
 
         //
         // GET: /Home/
         public ActionResult Index()
         {
-            return View(new LayoutModel(_configuration.LoginUrl, HttpContext.User.AsUserSession()));
+            return View();
         }
     }
 }

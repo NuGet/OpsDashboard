@@ -8,13 +8,11 @@ namespace NuGetGallery.Dashboard.ViewModel
 {
     public class LayoutModel
     {
-        public string LoginUrl { get; private set; }
-        public UserSession User { get; private set; }
+        public string LoginUrl { get; set; }
+        public UserSession User { get; set; }
 
-        public LayoutModel(string loginUrl, UserSession user)
+        public LayoutModel()
         {
-            LoginUrl = loginUrl;
-            User = user;
         }
     }
 }

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>NuGet Gallery Dashboard</title>
+    <title>NuGet Gallery Dashboard - @ViewBag.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="/Content/bootstrap-responsive.min.css" rel="stylesheet" />
@@ -26,11 +26,21 @@
                 }
             </ul>
             <a class="brand" href="/">NuGet Gallery Dashboard</a>
+            @if (Request.IsAuthenticated && Model.User.IsAdmin)
+            {
+                <ul class="nav">
+                    @Nav.AreaMenu("SiteStatus", "Site Status", "icon-stethoscope", @<text>
+                        @Nav.MenuAction("List", "Errors", "icon-warning-sign", "Error Logs")
+                    </text>)
+                </ul>
+            }
         </div>
     </nav>
 
     <div id="root-container" class="container-fluid">
         @RenderBody()
     </div>
+    <script src="~/Scripts/jquery-1.9.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

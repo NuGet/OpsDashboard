@@ -14,6 +14,7 @@ namespace NuGetGallery.Dashboard.Services
 
         public bool Authenticated { get { return _principal != null && _principal.Identity != null && _principal.Identity.IsAuthenticated; } }
         public string DisplayName { get; private set; }
+        public bool IsAdmin { get; private set; }
 
         public UserSession(ClaimsPrincipal principal)
         {
@@ -30,7 +31,9 @@ namespace NuGetGallery.Dashboard.Services
             DisplayName = String.Format("{0} {1}",
                 _principal.ClaimValue(ClaimTypes.GivenName),
                 _principal.ClaimValue(ClaimTypes.Surname));
-
+            IsAdmin = String.Equals(
+                "Administrator",
+                _principal.ClaimValue(ClaimTypes.Role));
         }
     }
 
