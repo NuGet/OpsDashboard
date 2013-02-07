@@ -20,5 +20,6 @@ namespace NuGetGallery.Dashboard.Services
         public virtual string TokenCertificateThumbprint { get { return GetSetting("TokenCertificateThumbprint"); } }
 
         protected abstract string GetSetting(string name);
+        public abstract EnvironmentConfiguration GetEnvironmentConfiguration(string environmentName);
     }
 }

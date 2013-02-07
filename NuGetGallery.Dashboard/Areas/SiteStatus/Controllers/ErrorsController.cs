@@ -10,11 +10,25 @@ namespace NuGetGallery.Dashboard.Areas.SiteStatus.Controllers
 {
     public class ErrorsController : BaseController
     {
-        public ErrorsController(ConfigurationService config) : base(config) { }
+        private ErrorLogService _errorLog;
+
+        public ErrorsController(ConfigurationService config, ErrorLogService errorLog) : base(config) {
+            _errorLog = errorLog;
+        }
 
         public ActionResult List()
         {
-            return View();
+            return List(0, 10);
+        }
+
+        public ActionResult List(int? pageIndex, int? pageSize)
+        {
+            pageIndex = pageIndex ?? 0;
+            pageSize = pageSize ?? 10;
+
+            // Fetch that page of data and display it
+            var result = _errorLog.GetPage(pageIndex, pageSize);
+            return View(result);
         }
     }
 }

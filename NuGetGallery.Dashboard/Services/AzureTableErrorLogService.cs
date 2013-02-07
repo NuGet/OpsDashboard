@@ -5,8 +5,7 @@ using System.Web;
 
 namespace NuGetGallery.Dashboard.Services
 {
-    public abstract class JobStatusService
+    public class AzureTableErrorLogService
     {
-        public abstract string GetJobStatusJson();
     }
 }
