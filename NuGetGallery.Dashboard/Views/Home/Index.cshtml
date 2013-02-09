@@ -11,11 +11,13 @@
     <!-- ko foreach: rows -->
     <div class="row-fluid" data-bind="foreach: environments">
         <div class="span4 well">
-            <div class="status pull-left" data-bind="css: { 'status-up': accessible() === true, 'status-down': accessible() === false, 'status-unknown': accessible() === null }">
+            <div class="status pull-left" data-bind="css: { 'status-up': (!loading() && accessible() === true), 'status-down': (!loading() && accessible() === false), 'status-unknown': loading() }">
                 <i data-bind="attr: { class: icon }"></i>
             </div>
             <h3><a href="#" data-bind="attr: { href: url }, text: name" target="_blank"></a></h3>
             <p data-bind="text: description"></p>
+            <p class="status-time">As of <span data-bind="text: lastUpdatedString"></span></p>
+            <button class="btn btn-small" data-bind="click: load"><i class="icon-refresh"></i> Refresh</button>
         </div>
     </div>
     <!-- /ko -->
