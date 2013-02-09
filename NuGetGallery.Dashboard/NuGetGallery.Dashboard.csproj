@@ -153,7 +153,7 @@
     <Compile Include="Configuration\AuthenticationConfig.cs" />
     <Compile Include="Configuration\ConnectionsConfig.cs" />
     <Compile Include="Configuration\ConnectionString.cs" />
-    <Compile Include="Configuration\DeploymentEnvironment.cs" />
+    <Compile Include="Model\DeploymentEnvironment.cs" />
     <Compile Include="Configuration\LocalJsonConfigurationService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -164,8 +164,12 @@
     <Compile Include="Infrastructure\JWT.cs" />
     <Compile Include="Model\ElmahError.cs" />
     <Compile Include="Services\AzureTableErrorLogService.cs" />
+    <Compile Include="Services\DefaultPingService.cs" />
     <Compile Include="Services\ErrorLogService.cs" />
     <Compile Include="Services\PageView.cs" />
+    <Compile Include="Services\PingResult.cs" />
+    <Compile Include="Services\Pinger.cs" />
+    <Compile Include="Services\Ping\UrlPinger.cs" />
     <Compile Include="ViewModel\Home\EnvironmentViewModel.cs" />
     <Compile Include="ViewModel\Home\IndexViewModel.cs" />
     <Compile Include="ViewModel\LayoutModel.cs" />
@@ -205,8 +209,11 @@
     <Content Include="Content\Master.less" />
     <Content Include="App_Data\Authentication.json" />
     <Content Include="Scripts\app\home.js" />
+    <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Helpers\Nav.cshtml">
       <Generator>RazorGenerator</Generator>

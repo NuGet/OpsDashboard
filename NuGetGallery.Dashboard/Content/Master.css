@@ -2,12 +2,31 @@
   position: relative;
   top: -0.25em;
 }
-.status {
+.status .status-icon {
   margin-right: 0.5em;
 }
-.status.status-up {
+.status .status-up {
   color: #008000;
 }
-.status.status-down {
+.status .status-warning {
+  color: #ffa500;
+}
+.status .status-down {
   color: #ff0000;
+}
+.status .status-detail-header {
+  margin-bottom: 1em;
+}
+.status .status-detail-header b.caret {
+  position: relative;
+  top: 7px;
+}
+.status .status-detail-header .status-detail ul {
+  margin: 0;
+  padding: 0;
+}
+.status .status-detail-header .status-detail ul li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }

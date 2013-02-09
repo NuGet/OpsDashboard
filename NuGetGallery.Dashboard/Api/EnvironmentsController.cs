@@ -9,12 +9,18 @@ using System.Web;
 using NuGetGallery.Dashboard.Api.Model;
 using NuGetGallery.Dashboard.Configuration;
 using NuGetGallery.Dashboard.Infrastructure;
+using NuGetGallery.Dashboard.Model;
+using NuGetGallery.Dashboard.Services;
 
 namespace NuGetGallery.Dashboard.Api
 {
     public class EnvironmentsController : BaseApiController
     {
-        public EnvironmentsController(IConfigurationService configuration) : base(configuration) { }
+        private readonly IEnumerable<Pinger> _pingers;
+
+        public EnvironmentsController(IConfigurationService configuration, IEnumerable<Pinger> pingers) : base(configuration) {
+            _pingers = pingers;
+        }
 
         public IEnumerable<EnvironmentStatus> GetAll()
         {
@@ -22,13 +28,7 @@ namespace NuGetGallery.Dashboard.Api
                 .Environments
                 .Values
                 .Where(e => e.PubliclyVisible || (User != null && User.IsInRole("Administrator")))
-                .Select(e => new EnvironmentStatus()
-                {
-                    Name = e.Name,
-                    Description = e.Description,
-                    Url = e.Url,
-                    AccessibleFromDashboard = null
-                });
+                .Select(e => CreateStatus(e));
         }
 
         public async Task<EnvironmentStatus> Get(string id)
@@ -39,26 +39,26 @@ namespace NuGetGallery.Dashboard.Api
                 throw NotFound();
             }
 
-            // Ping it from the dashboard
-            bool visible = false;
-            try
-            {
-                var handler = new WebRequestHandler() { CachePolicy = new RequestCachePolicy(RequestCacheLevel.BypassCache) };
-                var client = new HttpClient(handler);
-                var resp = await client.GetAsync(env.Url);
-                visible = resp.IsSuccessStatusCode;
-            }
-            catch (Exception)
-            {
-                // Swallow it!
-            }
+            // Run the pings
+            var pings = await Task.WhenAll(_pingers.Select(async p => await p.Ping(env)));
 
+            return CreateStatus(env, pings);
+        }
+
+        private EnvironmentStatus CreateStatus(DeploymentEnvironment env)
+        {
+            return CreateStatus(env, null);
+        }
+
+        private EnvironmentStatus CreateStatus(DeploymentEnvironment env, IList<PingResult> pings)
+        {
             return new EnvironmentStatus()
             {
+                Title = env.Title,
                 Name = env.Name,
                 Description = env.Description,
                 Url = env.Url,
-                AccessibleFromDashboard = visible
+                PingResults = pings ?? new List<PingResult>()
             };
         }
     }

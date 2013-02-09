@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using NuGetGallery.Dashboard.Model;
 
 namespace NuGetGallery.Dashboard.Configuration
 {

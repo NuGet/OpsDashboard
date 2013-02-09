@@ -16,6 +16,7 @@ using Ninject;
 using Ninject.Modules;
 using NuGetGallery.Dashboard.Configuration;
 using NuGetGallery.Dashboard.Services;
+using NuGetGallery.Dashboard.Services.Ping;
 
 namespace NuGetGallery.Dashboard.App_Start
 {
@@ -28,6 +29,26 @@ namespace NuGetGallery.Dashboard.App_Start
                   .InSingletonScope();
 
             SetupFederatedLogin();
+
+            SetupPingers();
+        }
+
+        private void SetupPingers()
+        {
+            Kernel.Bind<Pinger>()
+                  .ToMethod(_ => new UrlPinger("Home Page", env => env.Url))
+                  .InSingletonScope();
+            Kernel.Bind<Pinger>()
+                  .ToMethod(_ => new UrlPinger("v1 Feed", env => SetPath(env.Url, "/api/v1/")))
+                  .InSingletonScope();
+            Kernel.Bind<Pinger>()
+                  .ToMethod(_ => new UrlPinger("v2 Feed", env => SetPath(env.Url, "/api/v2/")))
+                  .InSingletonScope();
+        }
+
+        private Uri SetPath(Uri uri, string path)
+        {
+            return (new UriBuilder(uri) { Path = path }).Uri;
         }
 
         private void SetupFederatedLogin()
