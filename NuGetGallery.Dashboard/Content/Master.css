@@ -1,0 +1,13 @@
+﻿.loading-widget h3 {
+  position: relative;
+  top: -0.25em;
+}
+.status {
+  margin-right: 0.5em;
+}
+.status.status-up {
+  color: #008000;
+}
+.status.status-down {
+  color: #ff0000;
+}

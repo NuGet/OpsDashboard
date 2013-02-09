@@ -1,11 +1,19 @@
-﻿.page {
-    display: none;
-    &.active {
-        display: inherit;
+﻿@color-status-up: green;
+@color-status-down: red;
+
+.loading-widget {
+    h3 {
+        position: relative;
+        top: -0.25em;
     }
 }
 
-.nav-link-like
-{
-    padding: 10px 15px 10px;
+.status {
+    margin-right: 0.5em;
+    &.status-up {
+        color: @color-status-up;
+    }
+    &.status-down {
+        color: @color-status-down;
+    }
 }

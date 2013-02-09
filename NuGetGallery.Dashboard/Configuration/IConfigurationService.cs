@@ -9,7 +9,7 @@ namespace NuGetGallery.Dashboard.Configuration
     {
         AuthenticationConfig Auth { get; }
         ConnectionsConfig Connections { get; }
-        EnvironmentsConfig Environments { get; }
+        IDictionary<string, DeploymentEnvironment> Environments { get; }
 
         void Reload();
     }

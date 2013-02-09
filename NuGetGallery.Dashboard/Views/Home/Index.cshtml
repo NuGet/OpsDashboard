@@ -1,5 +1,26 @@
-﻿@{
+﻿@model NuGetGallery.Dashboard.ViewModel.Home.IndexViewModel
+@{
     ViewBag.Title = "Home";
 }
 
-<h2>Index</h2>
+<h2>Current Status</h2>
+
+@Html.Partial("_LoadingWidget")
+
+<div data-bind="if: !loading()">
+    <!-- ko foreach: rows -->
+    <div class="row-fluid" data-bind="foreach: environments">
+        <div class="span4 well">
+            <div class="status pull-left" data-bind="css: { 'status-up': accessible() === true, 'status-down': accessible() === false, 'status-unknown': accessible() === null }">
+                <i data-bind="attr: { class: icon }"></i>
+            </div>
+            <h3><a href="#" data-bind="attr: { href: url }, text: name" target="_blank"></a></h3>
+            <p data-bind="text: description"></p>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+
+@section BottomScripts {
+    <script src="~/Scripts/app/home.js"></script>
+}

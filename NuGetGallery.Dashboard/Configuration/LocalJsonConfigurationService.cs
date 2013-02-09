@@ -11,7 +11,7 @@ namespace NuGetGallery.Dashboard.Configuration
     {
         public AuthenticationConfig Auth { get; private set; }
         public ConnectionsConfig Connections { get; private set; }
-        public EnvironmentsConfig Environments { get; private set; }
+        public IDictionary<string, DeploymentEnvironment> Environments { get; private set; }
 
         public LocalJsonConfigurationService()
         {
@@ -33,9 +33,13 @@ namespace NuGetGallery.Dashboard.Configuration
             if (File.Exists(path))
             {
                 // Load the JSON
-                Environments = new EnvironmentsConfig(
-                    JsonConvert.DeserializeObject<IDictionary<string, DeploymentEnvironment>>(
-                        File.ReadAllText(path)));
+                // HACK: The dictionary key -> name thing could be done cleaner, but I'm lazy
+                var envs = JsonConvert.DeserializeObject<IDictionary<string, DeploymentEnvironment>>(File.ReadAllText(path));
+                foreach (var pair in envs)
+                {
+                    pair.Value.Name = pair.Key;
+                }
+                Environments = envs.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -44,9 +48,14 @@ namespace NuGetGallery.Dashboard.Configuration
             if (File.Exists(path))
             {
                 // Load the JSON
-                Connections = new ConnectionsConfig(
-                    JsonConvert.DeserializeObject<IDictionary<string, ConnectionString>>(
-                        File.ReadAllText(path)));
+                // HACK: The dictionary key -> name thing could be done cleaner, but I'm lazy
+                var connections = JsonConvert.DeserializeObject<IDictionary<string, ConnectionString>>(
+                    File.ReadAllText(path));
+                foreach (var pair in connections)
+                {
+                    pair.Value.Name = pair.Key;
+                }
+                Connections = new ConnectionsConfig(connections.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase));
             }
         }
 

@@ -11,6 +11,9 @@ namespace NuGetGallery.Dashboard.Configuration
     [JsonConverter(typeof(ConnectionStringConverter))]
     public class ConnectionString
     {
+        [JsonIgnore]
+        public string Name { get; set; }
+
         public string Value { get; private set; }
 
         protected ConnectionString(string value)

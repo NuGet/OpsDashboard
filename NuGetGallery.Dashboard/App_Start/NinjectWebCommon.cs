@@ -5,11 +5,12 @@ namespace NuGetGallery.Dashboard.App_Start
 {
     using System;
     using System.Web;
-
+    using System.Web.Http;
+    using System.Web.Mvc;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
     using Ninject;
     using Ninject.Web.Common;
+    using Ninject.Web.Mvc;
 
     public static class NinjectWebCommon 
     {
@@ -43,6 +44,7 @@ namespace NuGetGallery.Dashboard.App_Start
             kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
             ServiceProvider.Instance = kernel;
+            GlobalConfiguration.Configuration.DependencyResolver = new NinjectWebApiDependencyResolver(kernel);
             return kernel;
         }
     }
