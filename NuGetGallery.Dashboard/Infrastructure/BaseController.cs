@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NuGetGallery.Dashboard.Configuration;
 using NuGetGallery.Dashboard.Services;
 using NuGetGallery.Dashboard.ViewModel;
 
@@ -10,9 +11,9 @@ namespace NuGetGallery.Dashboard.Infrastructure
 {
     public abstract class BaseController : Controller
     {
-        public ConfigurationService Configuration { get; private set; }
+        public IConfigurationService Configuration { get; private set; }
 
-        protected BaseController(ConfigurationService configuration)
+        protected BaseController(IConfigurationService configuration)
         {
             Configuration = configuration;
         }
@@ -43,7 +44,7 @@ namespace NuGetGallery.Dashboard.Infrastructure
             }
 
             // Set common layout properties
-            baseModel.LoginUrl = String.Format(Configuration.LoginUrlFormat, Configuration.AuthenticationRealm);
+            baseModel.LoginUrl = String.Format(Configuration.Auth.LoginUrl);
             baseModel.User = HttpContext.User.AsUserSession();
             return model;
         }

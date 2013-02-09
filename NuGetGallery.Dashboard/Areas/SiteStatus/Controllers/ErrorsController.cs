@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using NuGetGallery.Dashboard.Configuration;
 using NuGetGallery.Dashboard.Infrastructure;
 using NuGetGallery.Dashboard.Services;
 
@@ -12,7 +13,7 @@ namespace NuGetGallery.Dashboard.Areas.SiteStatus.Controllers
     {
         private ErrorLogService _errorLog;
 
-        public ErrorsController(ConfigurationService config, ErrorLogService errorLog) : base(config) {
+        public ErrorsController(IConfigurationService config, ErrorLogService errorLog) : base(config) {
             _errorLog = errorLog;
         }
 

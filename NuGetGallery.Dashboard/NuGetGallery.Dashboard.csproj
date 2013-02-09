@@ -148,6 +148,12 @@
     <Compile Include="App_Start\ServiceProvider.cs" />
     <Compile Include="Areas\SiteStatus\SiteStatusAreaRegistration.cs" />
     <Compile Include="Areas\SiteStatus\Controllers\ErrorsController.cs" />
+    <Compile Include="Configuration\AuthenticationConfig.cs" />
+    <Compile Include="Configuration\ConnectionsConfig.cs" />
+    <Compile Include="Configuration\ConnectionString.cs" />
+    <Compile Include="Configuration\DeploymentEnvironment.cs" />
+    <Compile Include="Configuration\EnvironmentsConfig.cs" />
+    <Compile Include="Configuration\LocalJsonConfigurationService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -155,18 +161,15 @@
     <Compile Include="Infrastructure\BaseController.cs" />
     <Compile Include="Infrastructure\DashboardUserPrincipal.cs" />
     <Compile Include="Infrastructure\JWT.cs" />
+    <Compile Include="Model\ElmahError.cs" />
+    <Compile Include="Services\AzureTableErrorLogService.cs" />
+    <Compile Include="Services\ErrorLogService.cs" />
+    <Compile Include="Services\PageView.cs" />
     <Compile Include="ViewModel\LayoutModel.cs" />
     <Compile Include="ViewModel\PackageFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AzureBlobJobStatusService.cs" />
-    <Compile Include="Services\AzureBlobPackageService.cs" />
-    <Compile Include="Services\ConfigurationService.cs" />
-    <Compile Include="Services\DataProtectionService.cs" />
-    <Compile Include="Services\JobStatusService.cs" />
-    <Compile Include="Services\MachineKeyDataProtectionService.cs" />
-    <Compile Include="Services\PackageService.cs" />
+    <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Services\UserSession.cs" />
-    <Compile Include="Services\WebConfigConfigurationService.cs" />
     <Compile Include="Views\Helpers\Nav.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,7 +193,7 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Master.less" />
-    <Content Include="App_Data\settings.private.json" />
+    <Content Include="App_Data\Authentication.json" />
     <Content Include="Areas\SiteStatus\Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -199,6 +202,8 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Nav.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="App_Data\Connections.json" />
+    <Content Include="App_Data\Environments.json" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

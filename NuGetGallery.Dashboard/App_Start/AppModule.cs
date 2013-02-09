@@ -13,6 +13,7 @@ using System.Text;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Modules;
+using NuGetGallery.Dashboard.Configuration;
 using NuGetGallery.Dashboard.Services;
 
 namespace NuGetGallery.Dashboard.App_Start
@@ -21,20 +22,8 @@ namespace NuGetGallery.Dashboard.App_Start
     {
         public override void Load()
         {
-            Kernel.Bind<ConfigurationService>()
-                  .To<WebConfigConfigurationService>()
-                  .InSingletonScope();
-
-            Kernel.Bind<PackageService>()
-                  .To<AzureBlobPackageService>()
-                  .InSingletonScope();
-
-            Kernel.Bind<JobStatusService>()
-                  .To<AzureBlobJobStatusService>()
-                  .InSingletonScope();
-
-            Kernel.Bind<DataProtectionService>()
-                  .To<MachineKeyDataProtectionService>()
+            Kernel.Bind<IConfigurationService>()
+                  .To<LocalJsonConfigurationService>()
                   .InSingletonScope();
 
             SetupFederatedLogin();
@@ -44,16 +33,16 @@ namespace NuGetGallery.Dashboard.App_Start
         {
             FederatedAuthentication.FederationConfigurationCreated += (sender, args) =>
             {
-                var config = Kernel.Get<ConfigurationService>();
+                var config = Kernel.Get<IConfigurationService>();
                 var idconfig = new IdentityConfiguration();
-                idconfig.AudienceRestriction.AllowedAudienceUris.Add(new Uri(config.AudienceUrl));
+                idconfig.AudienceRestriction.AllowedAudienceUris.Add(new Uri(config.Auth.AudienceUrl));
 
                 var registry = new ConfigurationBasedIssuerNameRegistry();
-                registry.AddTrustedIssuer(config.TokenCertificateThumbprint, config.AuthenticationIssuer);
+                registry.AddTrustedIssuer(config.Auth.TokenCertificateThumbprint, config.Auth.AuthenticationIssuer);
                 idconfig.IssuerNameRegistry = registry;
                 idconfig.CertificateValidationMode = X509CertificateValidationMode.None;
 
-                var wsfedconfig = new WsFederationConfiguration(config.AuthenticationIssuer, config.AuthenticationRealm);
+                var wsfedconfig = new WsFederationConfiguration(config.Auth.AuthenticationIssuer, config.Auth.AuthenticationRealm);
                 wsfedconfig.PersistentCookiesOnPassiveRedirects = true;
                 
                 args.FederationConfiguration.IdentityConfiguration = idconfig;
