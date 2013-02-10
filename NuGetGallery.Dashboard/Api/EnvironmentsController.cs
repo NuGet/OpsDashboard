@@ -38,6 +38,10 @@ namespace NuGetGallery.Dashboard.Api
             {
                 throw NotFound();
             }
+            if (!env.PubliclyVisible && !User.IsInRole("Administrator"))
+            {
+                throw NotFound();
+            }
 
             // Run the pings
             var pings = await Task.WhenAll(_pingers.Select(async p => await p.Ping(env)));
