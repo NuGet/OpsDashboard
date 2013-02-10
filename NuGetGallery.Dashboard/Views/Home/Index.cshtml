@@ -1,4 +1,5 @@
-﻿@model NuGetGallery.Dashboard.ViewModel.Home.IndexViewModel
+﻿@using System.Web.Optimization
+@model NuGetGallery.Dashboard.ViewModel.Home.IndexViewModel
 @{
     ViewBag.Title = "Home";
 }
@@ -34,5 +35,5 @@
 </div>
 
 @section BottomScripts {
-    <script src="~/Scripts/app/home.js"></script>
+    @Scripts.Render("~/Scripts/app/home.js")
 }

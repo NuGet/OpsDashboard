@@ -35,5 +35,12 @@ namespace NuGetGallery.Dashboard.Controllers
             FederatedAuthentication.WSFederationAuthenticationModule.SignOut();
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ReloadConfig()
+        {
+            Configuration.Reload(force: true);
+            return RedirectBack();
+        }
     }
 }

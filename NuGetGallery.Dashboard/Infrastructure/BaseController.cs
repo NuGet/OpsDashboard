@@ -28,6 +28,18 @@ namespace NuGetGallery.Dashboard.Infrastructure
             return base.View(viewName, masterName, EnsureModelFitsLayout(model));
         }
 
+        protected virtual ActionResult RedirectBack()
+        {
+            if (String.Equals(HttpContext.Request.UrlReferrer.Host, HttpContext.Request.Url.Host, StringComparison.OrdinalIgnoreCase) &&
+                HttpContext.Request.UrlReferrer.Port == HttpContext.Request.Url.Port)
+            {
+                // The referrer is inside our app, redirect to them
+                return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
+            }
+            // Unknown referrer, go home
+            return RedirectToAction("Index", "Home");
+        }
+
         private object EnsureModelFitsLayout(object model)
         {
             if (model == null)

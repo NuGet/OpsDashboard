@@ -17,7 +17,7 @@ namespace NuGetGallery.Dashboard.App_Start
 
         public IDependencyScope BeginScope()
         {
-            return new NinjectWebApiDependencyScope(_kernel.BeginBlock());
+            return new NinjectWebApiDependencyScope(_kernel);
         }
     }
 
@@ -42,12 +42,6 @@ namespace NuGetGallery.Dashboard.App_Start
 
         public void Dispose()
         {
-            IDisposable disposable = _root as IDisposable;
-            if (disposable != null)
-            {
-                disposable.Dispose();
-            }
-            _root = null;
         }
     }
 }
