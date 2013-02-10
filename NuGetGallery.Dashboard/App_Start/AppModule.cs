@@ -76,6 +76,7 @@ namespace NuGetGallery.Dashboard.App_Start
             FederatedAuthentication.FederationConfigurationCreated += (sender, args) =>
             {
                 var config = Kernel.Get<IConfigurationService>();
+                config.Reload(force: true); // Force a full reload
                 var idconfig = new IdentityConfiguration();
                 idconfig.AudienceRestriction.AllowedAudienceUris.Add(new Uri(config.Auth.AudienceUrl));
 
