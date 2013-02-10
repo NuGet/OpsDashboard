@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.IdentityModel;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Services;
@@ -94,6 +95,13 @@ namespace NuGetGallery.Dashboard.App_Start
                 registry.AddTrustedIssuer(config.Auth.TokenCertificateThumbprint, config.Auth.AuthenticationIssuer);
                 idconfig.IssuerNameRegistry = registry;
                 idconfig.CertificateValidationMode = X509CertificateValidationMode.None;
+
+                var sessionTransforms = new List<CookieTransform>() {
+                    new DeflateCookieTransform(),
+                    new RsaEncryptionCookieTransform(args.FederationConfiguration.ServiceCertificate),
+                    new RsaSignatureCookieTransform(args.FederationConfiguration.ServiceCertificate)
+                };
+                idconfig.SecurityTokenHandlers.AddOrReplace(new SessionSecurityTokenHandler(sessionTransforms.AsReadOnly()));
 
                 var wsfedconfig = new WsFederationConfiguration(config.Auth.AuthenticationIssuer, config.Auth.AuthenticationRealm);
                 wsfedconfig.PersistentCookiesOnPassiveRedirects = true;
