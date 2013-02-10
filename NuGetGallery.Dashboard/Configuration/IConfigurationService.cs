@@ -12,6 +12,6 @@ namespace NuGetGallery.Dashboard.Configuration
         ConnectionsConfig Connections { get; }
         IDictionary<string, DeploymentEnvironment> Environments { get; }
 
-        void Reload();
+        void Reload(bool force);
     }
 }

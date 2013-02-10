@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.IdentityModel.Configuration;
 using System.IdentityModel.Selectors;
 using System.IdentityModel.Services;
 using System.IdentityModel.Services.Configuration;
 using System.IdentityModel.Tokens;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Security;
@@ -24,9 +26,27 @@ namespace NuGetGallery.Dashboard.App_Start
     {
         public override void Load()
         {
-            Kernel.Bind<IConfigurationService>()
-                  .To<LocalJsonConfigurationService>()
-                  .InSingletonScope();
+            // Initialize Config
+            var configMode = ConfigurationManager.AppSettings["ConfigMode"];
+            var localRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data");
+            if (String.Equals(configMode, "blob", StringComparison.OrdinalIgnoreCase) &&
+                !String.IsNullOrEmpty(ConfigurationManager.AppSettings["ConfigStorage"]) &&
+                !String.IsNullOrEmpty(ConfigurationManager.AppSettings["ConfigContainer"]))
+            {
+                Kernel.Bind<IConfigurationService>()
+                      .To<BlobJsonConfigurationService>()
+                      .InSingletonScope()
+                      .WithConstructorArgument("connectionString", ConfigurationManager.AppSettings["ConfigStorage"])
+                      .WithConstructorArgument("container", ConfigurationManager.AppSettings["ConfigContainer"])
+                      .WithConstructorArgument("localRoot", localRoot);
+            }
+            else
+            {
+                Kernel.Bind<IConfigurationService>()
+                      .To<LocalJsonConfigurationService>()
+                      .InSingletonScope()
+                      .WithConstructorArgument("root", localRoot);
+            }
 
             SetupFederatedLogin();
 

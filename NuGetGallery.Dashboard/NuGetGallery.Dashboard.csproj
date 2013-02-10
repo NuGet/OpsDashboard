@@ -147,6 +147,7 @@
     <Compile Include="Api\EnvironmentsController.cs" />
     <Compile Include="Api\Model\EnvironmentStatus.cs" />
     <Compile Include="App_Start\AppModule.cs" />
+    <Compile Include="App_Start\BlobJsonConfigurationService.cs" />
     <Compile Include="App_Start\NinjectWebApiDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\ServiceProvider.cs" />
@@ -162,11 +163,7 @@
     <Compile Include="Infrastructure\BaseController.cs" />
     <Compile Include="Infrastructure\DashboardUserPrincipal.cs" />
     <Compile Include="Infrastructure\JWT.cs" />
-    <Compile Include="Model\ElmahError.cs" />
-    <Compile Include="Services\AzureTableErrorLogService.cs" />
     <Compile Include="Services\DefaultPingService.cs" />
-    <Compile Include="Services\ErrorLogService.cs" />
-    <Compile Include="Services\PageView.cs" />
     <Compile Include="Services\PingResult.cs" />
     <Compile Include="Services\Pinger.cs" />
     <Compile Include="Services\Ping\UrlPinger.cs" />
@@ -207,7 +204,6 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Content\Master.less" />
-    <Content Include="App_Data\Authentication.json" />
     <Content Include="Scripts\app\home.js" />
     <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
@@ -219,8 +215,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Nav.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="App_Data\Connections.json" />
-    <Content Include="App_Data\Environments.json" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -240,7 +234,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoadingWidget.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

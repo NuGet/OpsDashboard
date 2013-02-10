@@ -10,23 +10,33 @@ namespace NuGetGallery.Dashboard.Configuration
 {
     public class LocalJsonConfigurationService : IConfigurationService
     {
-        public AuthenticationConfig Auth { get; private set; }
-        public ConnectionsConfig Connections { get; private set; }
-        public IDictionary<string, DeploymentEnvironment> Environments { get; private set; }
+        private AuthenticationConfig _auth;
+        private ConnectionsConfig _connections;
+        private IDictionary<string, DeploymentEnvironment> _envs;
 
-        public LocalJsonConfigurationService()
+        public string Root { get; private set; }
+        public AuthenticationConfig Auth { get { EnsureLoaded(); return _auth; } }
+        public ConnectionsConfig Connections { get { EnsureLoaded(); return _connections; } }
+        public IDictionary<string, DeploymentEnvironment> Environments { get { EnsureLoaded(); return _envs; } }
+
+        public LocalJsonConfigurationService(string root)
         {
-            Reload();
+            Root = root;
         }
 
-        public void Reload()
+        public virtual void Reload(bool force)
         {
-            // Load each file
-            string root = AppDomain.CurrentDomain.BaseDirectory;
+            LoadAuth(Path.Combine(Root, "Authentication.json"));
+            LoadConnections(Path.Combine(Root, "Connections.json"));
+            LoadEnvironments(Path.Combine(Root, "Environments.json"));
+        }
 
-            LoadAuth(Path.Combine(root, "App_Data", "Authentication.json"));
-            LoadConnections(Path.Combine(root, "App_Data", "Connections.json"));
-            LoadEnvironments(Path.Combine(root, "App_Data", "Environments.json"));
+        private void EnsureLoaded()
+        {
+            if (_auth == null || _connections == null || _envs == null)
+            {
+                Reload(false);
+            }
         }
 
         private void LoadEnvironments(string path)
@@ -40,7 +50,11 @@ namespace NuGetGallery.Dashboard.Configuration
                 {
                     pair.Value.Name = pair.Key;
                 }
-                Environments = envs.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase);
+                _envs = envs.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase);
+            }
+            else
+            {
+                _envs = new Dictionary<string, DeploymentEnvironment>();
             }
         }
 
@@ -56,7 +70,11 @@ namespace NuGetGallery.Dashboard.Configuration
                 {
                     pair.Value.Name = pair.Key;
                 }
-                Connections = new ConnectionsConfig(connections.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase));
+                _connections = new ConnectionsConfig(connections.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase));
+            }
+            else
+            {
+                _connections = new ConnectionsConfig();
             }
         }
 
@@ -65,9 +83,13 @@ namespace NuGetGallery.Dashboard.Configuration
             if (File.Exists(path))
             {
                 // Load the JSON
-                Auth = 
+                _auth =
                     JsonConvert.DeserializeObject<AuthenticationConfig>(
                         File.ReadAllText(path));
+            }
+            else
+            {
+                _auth = new AuthenticationConfig();
             }
         }
     }
