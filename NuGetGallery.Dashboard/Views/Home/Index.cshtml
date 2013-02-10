@@ -3,41 +3,31 @@
     ViewBag.Title = "Home";
 }
 
-<h2>Current Status</h2>
+<div class="page-header">
+    <h1>Current Status <small>Is NuGet.org up?</small></h1>
+</div>
 
 @Html.Partial("_LoadingWidget")
 
 <div data-bind="if: !loading()">
     <!-- ko foreach: rows -->
     <div class="row-fluid" data-bind="foreach: environments">
-        <div data-bind="attr: {id: domId}" class="span4 well status">
+        <div data-bind="attr: {id: domId}" class="span4 hero-unit hero-small status">
             <div class="status-icon pull-left" data-bind="css: { 'status-up': (!loading() && isUp()), 'status-warning': (!loading() && !isUp() && !isDown()), 'status-down': (!loading() && isDown()), 'status-unknown': loading() }">
-                <i data-bind="attr: { class: icon }"></i>
+                <i data-bind="attr: { class: icon, title: statusDetail }"></i>
             </div>
             <h3><a href="#" data-bind="attr: { href: url }, text: title" target="_blank"></a></h3>
-            <p data-bind="text: description"></p>
-            <p data-bind="if: !loading()" class="status-time">As of <span data-bind="text: lastUpdatedString"></span></p>
-            <div class="status-detail-header" data-bind="if: !loading()">
-                <a href="#" data-toggle="collapse" data-bind="attr: {'data-target': '#' + domId + ' .status-detail-header .status-detail'}">
-                    <b class="pull-right caret"></b>
-                    Details...
-                </a>
-                <div class="collapse status-detail">
-                    <table class="table">
-                        <tbody data-bind="foreach: pingResults">
-                            <tr>
-                                <td>
-                                    <i data-bind="css: { 'icon-thumbs-up': result(), 'icon-thumbs-down': !result() }"></i>
-                                    <span data-bind="text: resultMessage"></span>
-                                </td>
-                                <td data-bind="text: title" />
-                                <td data-bind="text: detail" />
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="clear">
+                <p data-bind="text: description"></p>
+                <div class="alert" data-bind="text: oneLineStatus, css: { 'visible-desktop': (!loading() && isUp()), 'alert-success': (!loading() && isUp()), 'alert-error': (!loading() && isDown()) }">
                 </div>
+                <p class="status-time visible-desktop">
+                    As of 
+                <span data-bind="visible: !loading(), text: lastUpdatedString"></span>
+                    <span data-bind="visible: loading">???</span>
+                </p>
+                <button class="btn" data-bind="click: load"><i class="icon-refresh"></i> Refresh</button>
             </div>
-            <button class="btn btn-small" data-bind="click: load"><i class="icon-refresh"></i> Refresh</button>
         </div>
     </div>
     <!-- /ko -->

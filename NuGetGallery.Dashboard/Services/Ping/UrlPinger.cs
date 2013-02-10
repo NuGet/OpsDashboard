@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Cache;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -31,28 +32,66 @@ namespace NuGetGallery.Dashboard.Services.Ping
             try
             {
                 var resp = await client.GetAsync(url);
-                if (resp.IsSuccessStatusCode)
-                {
-                    return new PingResult(
-                        _name,
-                        detail: String.Format("Successfully pinged!", url.AbsoluteUri),
-                        target: url.AbsoluteUri,
-                        success: true);
-                }
-                return new PingResult(
-                    _name,
-                    detail: String.Format("Recieved {0} error!", (int)resp.StatusCode, url.AbsoluteUri),
-                    target: url.AbsoluteUri,
-                    success: false);
+                return HttpResponseResult(url, resp);
             }
-            catch (Exception ex)
+            catch (HttpRequestException hrex)
+            {
+                WebException wex = hrex.InnerException as WebException;
+                if (wex != null)
+                {
+                    return WebExceptionResult(url, wex);
+                }
+                return UnknownErrorResult(url);
+            }
+            catch (Exception)
+            {
+                return UnknownErrorResult(url);
+            }
+        }
+
+        private PingResult WebExceptionResult(Uri url, WebException wex)
+        {
+            string detailString;
+            switch (wex.Status)
+            {
+                case WebExceptionStatus.NameResolutionFailure:
+                    detailString = "Host name could not be resolved";
+                    break;
+                default:
+                    detailString = String.Format("{0} error", wex.Status);
+                    break;
+            }
+            return new PingResult(
+                _name,
+                detailString,
+                target: url.AbsoluteUri,
+                success: false);
+        }
+
+        private PingResult HttpResponseResult(Uri url, HttpResponseMessage resp)
+        {
+            if (resp.IsSuccessStatusCode)
             {
                 return new PingResult(
                     _name,
-                    detail: String.Format("Unknown error!", url.AbsoluteUri),
+                    detail: String.Format("Successfully pinged!", url.AbsoluteUri),
                     target: url.AbsoluteUri,
-                    success: false);
+                    success: true);
             }
+            return new PingResult(
+                _name,
+                detail: String.Format("Recieved {0} error!", (int)resp.StatusCode, url.AbsoluteUri),
+                target: url.AbsoluteUri,
+                success: false);
+        }
+
+        private PingResult UnknownErrorResult(Uri url)
+        {
+            return new PingResult(
+                _name,
+                detail: String.Format("Unknown error!", url.AbsoluteUri),
+                target: url.AbsoluteUri,
+                success: false);
         }
     }
 }

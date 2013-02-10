@@ -19,6 +19,10 @@
             }
         });
 
+        self.statusMessage = ko.computed(function () {
+            return self.title() + ': ' + self.detail();
+        });
+
         return self;
     }
 
@@ -33,6 +37,28 @@
         self.url = ko.observable(url);
         self.loading = ko.observable(true);
         self.pingResults = ko.observableArray([]);
+
+        self.oneLineStatus = ko.computed(function () {
+            var message = 'All Systems Go!';
+            var item = _.find(self.pingResults(), function (r) { return !r.result(); });
+            if (item) {
+                message = item.statusMessage();
+            }
+            return message;
+        });
+
+        self.statusDetail = ko.computed(function () {
+            var message = '';
+            _.forEach(self.pingResults(), function (r) {
+                if (!r.result()) {
+                    message += r.statusMessage() + '\n';
+                }
+            });
+            if (message.length == 0) {
+                message = self.oneLineStatus();
+            }
+            return message;
+        });
 
         self.isUp = ko.computed(function () {
             return _.every(self.pingResults(), function (r) { return r.result(); });

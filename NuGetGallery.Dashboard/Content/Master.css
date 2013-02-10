@@ -2,6 +2,10 @@
   position: relative;
   top: -0.25em;
 }
+.status h3 {
+  position: relative;
+  top: 0.25em;
+}
 .status .status-icon {
   margin-right: 0.5em;
 }
@@ -29,4 +33,10 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+.hero-small {
+  padding: 30px;
+}
+.clear {
+  clear: both;
 }

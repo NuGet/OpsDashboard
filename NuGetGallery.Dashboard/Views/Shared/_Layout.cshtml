@@ -18,22 +18,24 @@
         <div class="navbar-inner">
             <ul class="nav pull-right">
                 @if(Request.IsAuthenticated) {
-                    <li><a href="#">@Model.User.DisplayName</a></li>
+                    <li>
+                        <a href="@Url.Action("SignOut", "Home")">
+                            <i class="icon-signout"></i>
+                            <span class="hidden-phone">Logout @Model.User.DisplayName</span>
+                        </a>
+                    </li>
                 }
                 else
                 {
-                    <li><a href="@Model.LoginUrl">Administrator Login</a></li>
+                    <li>
+                        <a href="@Model.LoginUrl">
+                            <i class="icon-signin"></i>
+                            <span class="hidden-phone">Administrator Login</span>
+                        </a>
+                    </li>
                 }
             </ul>
             <a class="brand" href="/">NuGet Gallery Dashboard</a>
-            @if (Request.IsAuthenticated && Model.User.IsAdmin)
-            {
-                <ul class="nav">
-                    @Nav.AreaMenu("SiteStatus", "Site Status", "icon-stethoscope", @<text>
-                        @Nav.MenuAction("List", "Errors", "icon-warning-sign", "Error Logs")
-                    </text>)
-                </ul>
-            }
         </div>
     </nav>
 

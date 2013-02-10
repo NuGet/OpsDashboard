@@ -15,17 +15,17 @@
     }
 }
 
-.loading-widget
-{
-    h3
-    {
-        position: relative;
-        top: -0.25em;
-    }
+.bumptop(@amount) {
+    position: relative;
+    top: @amount;
 }
+
+
+.loading-widget h3 { .bumptop(-0.25em); }
 
 .status
 {
+    h3 { .bumptop(0.25em); }
     .status-icon
     {
         margin-right: 0.5em;
@@ -67,4 +67,12 @@
             }
         }
     }
+}
+
+.hero-small {
+    padding: 30px;
+}
+
+.clear {
+    clear: both;
 }

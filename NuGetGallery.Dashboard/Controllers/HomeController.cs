@@ -28,5 +28,12 @@ namespace NuGetGallery.Dashboard.Controllers
                 Url = e.Url
             })));
         }
+
+        [Authorize]
+        public ActionResult SignOut()
+        {
+            FederatedAuthentication.WSFederationAuthenticationModule.SignOut();
+            return RedirectToAction("Index");
+        }
     }
 }
