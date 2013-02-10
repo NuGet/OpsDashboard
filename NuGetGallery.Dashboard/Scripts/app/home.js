@@ -38,13 +38,9 @@
         self.loading = ko.observable(true);
         self.pingResults = ko.observableArray([]);
 
-        self.oneLineStatus = ko.computed(function () {
-            var message = 'All Systems Go!';
-            var item = _.find(self.pingResults(), function (r) { return !r.result(); });
-            if (item) {
-                message = item.statusMessage();
-            }
-            return message;
+        self.firstFailed = ko.computed(function () {
+            var ret = _.find(self.pingResults(), function (r) { return !r.result(); });
+            return ret;
         });
 
         self.statusDetail = ko.computed(function () {
@@ -55,7 +51,7 @@
                 }
             });
             if (message.length == 0) {
-                message = self.oneLineStatus();
+                message = 'All Systems Go!';
             }
             return message;
         });
@@ -86,7 +82,7 @@
             } else if (self.isDown()) {
                 return 'icon-minus-sign icon-4x';
             } else {
-                return 'icon-exclamation-sign icon-4x';
+                return 'icon-warning-sign icon-4x';
             }
         });
 

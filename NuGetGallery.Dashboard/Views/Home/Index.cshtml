@@ -19,9 +19,15 @@
             </div>
             <h3><a href="#" data-bind="attr: { href: url }, text: title" target="_blank"></a></h3>
             <div class="clear">
-                <p data-bind="text: description"></p>
-                <div class="alert" data-bind="text: oneLineStatus, css: { 'visible-desktop': (!loading() && isUp()), 'alert-success': (!loading() && isUp()), 'alert-error': (!loading() && isDown()) }">
+                <div class="alert" data-bind="visible: firstFailed, with: firstFailed, css: { 'alert-error': (!loading() && isDown()) }">
+                    <a data-bind="attr: { href: url, title: title }, text: title" target="_blank"></a>: <span data-bind="    text: detail"></span>
                 </div>
+                <!-- ko if: !(firstFailed()) -->
+                <div class="alert alert-success visible-desktop">
+                    All Systems Go!
+                </div>
+                <!-- /ko -->
+                <p data-bind="text: description"></p>
                 <p class="status-time visible-desktop">
                     As of 
                 <span data-bind="visible: !loading(), text: lastUpdatedString"></span>

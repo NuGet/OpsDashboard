@@ -10,9 +10,17 @@ namespace NuGetGallery.Dashboard
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/Scripts/lib/script").IncludeDirectory("~/Scripts/lib", "*.js"));
-            bundles.Add(new StyleBundle("~/Content/css/styles").IncludeDirectory("~/Content/css", "*.css"));
-
+            bundles.Add(new ScriptBundle("~/Scripts/lib/script")
+                .Include("~/Scripts/lib/jquery-{version}.js")
+                .Include("~/Scripts/lib/jquery.timeago.js")
+                .Include("~/Scripts/lib/knockout-{version}.js")
+                .Include("~/Scripts/lib/underscore.js")
+                .Include("~/Scripts/lib/bootstrap.js"));
+            bundles.Add(new StyleBundle("~/Content/css/styles")
+                .Include("~/Content/css/bootstrap.css")
+                .Include("~/Content/css/bootstrap-responsive.css")
+                .Include("~/Content/css/font-awesome.css")
+                .Include("~/Content/css/Master.css"));
         }
     }
 }
