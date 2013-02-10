@@ -98,8 +98,7 @@ namespace NuGetGallery.Dashboard.App_Start
 
                 var sessionTransforms = new List<CookieTransform>() {
                     new DeflateCookieTransform(),
-                    new RsaEncryptionCookieTransform(args.FederationConfiguration.ServiceCertificate),
-                    new RsaSignatureCookieTransform(args.FederationConfiguration.ServiceCertificate)
+                    new MachineKeyTransform()
                 };
                 idconfig.SecurityTokenHandlers.AddOrReplace(new SessionSecurityTokenHandler(sessionTransforms.AsReadOnly()));
 
