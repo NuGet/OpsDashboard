@@ -116,6 +116,10 @@
             });
         }
 
+        self.makeProduction = function () {
+            viewModel.productionEnvironmentName(self.name());
+        };
+
         return self;
     }
 
@@ -130,9 +134,60 @@
     function PageViewModel() {
         var self = {};
 
+        self.productionEnvironmentName = ko.observable('Production');
+
+        self.overrideStatus = ko.observable('');
+
         self.rows = ko.observableArray([]);
         self.loading = ko.observable(true);
-        
+
+        self.production = ko.computed(function () {
+            for (var i = 0; i < self.rows().length; i++) {
+                var row = self.rows()[i];
+                for (var i = 0; i < row.environments().length; i++) {
+                    var env = row.environments()[i];
+                    if (env.name() == self.productionEnvironmentName()) {
+                        return env;
+                    }
+                }
+            }
+            return null;
+        });
+
+        self.statusReady = ko.computed(function () {
+            return !self.loading() && self.production() && !self.production().loading();
+        });
+
+        self.masterStatus = ko.computed(function () {
+            if (!self.statusReady()) {
+                return 'Loading...';
+            } else if (self.isUp()) {
+                return 'All Systems Fully Operational';
+            } else if (!self.isDown()) {
+                return 'Limited Service Interruption';
+            } else {
+                return 'System Outage';
+            }
+        });
+
+        self.isUp = ko.computed(function () {
+            if (self.overrideStatus() === 'Up') {
+                return true;
+            } else if (self.overrideStatus()) {
+                return false;
+            }
+            return self.statusReady() && self.production().isUp();
+        });
+
+        self.isDown = ko.computed(function () {
+            if (self.overrideStatus() === 'Down') {
+                return true;
+            } else if (self.overrideStatus()) {
+                return false;
+            }
+            return self.statusReady() && self.production().isDown();
+        });
+
         self.load = function () {
             $.getJSON('/api/v1/environments', function (data, status, xhr) {
                 if (data) {
@@ -164,14 +219,20 @@
             setTimeout(self.load, refreshInterval);
         }
 
+        self.previewDown = function () { self.overrideStatus('Down'); }
+        self.previewUp = function () { self.overrideStatus('Up'); }
+        self.previewWarning = function () { self.overrideStatus('Warning'); }
+        self.previewReset = function () { self.overrideStatus(''); }
+
         return self;
     }
 
     var model = {};
+    var viewModel = {};
     $(function () {
         model = $(document.body).data().model;
         $('time').timeago();
-        var viewModel = new PageViewModel();
+        viewModel = new PageViewModel();
         ko.applyBindings(viewModel);
         setTimeout(viewModel.load, 0);
     });

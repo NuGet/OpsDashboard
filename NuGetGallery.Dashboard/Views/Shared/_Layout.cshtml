@@ -13,45 +13,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css/styles")
 </head>
-<body data-model="@clientModelJson">
+<body data-model="@clientModelJson" data-bind="css: { 'site-up': statusReady() && isUp(), 'site-warning': statusReady() && !isUp() && !isDown(), 'site-down': statusReady() && isDown() }">
     <nav id="site-header" class="navbar navbar-static-top">
         <div class="navbar-inner">
-            <ul class="nav pull-right">
-                @if(Model.IsAdmin) {
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-cogs"></i>
-                            <span class="hidden-phone">Admin</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="@Url.Action("ReloadConfig", "Home")">
-                                    <i class="icon-refresh"></i>
-                                    Reload Config
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("SignOut", "Home")">
-                            <i class="icon-signout"></i>
-                            <span class="hidden-phone">Logout @Model.User.DisplayName</span>
-                        </a>
-                    </li>
-                }
-                else
-                {
-                    <li>
-                        <a href="@Model.LoginUrl">
-                            <i class="icon-signin"></i>
-                            <span class="hidden-phone">Administrator Login</span>
-                        </a>
-                    </li>
-                }
-            </ul>
-            <a class="brand hidden-phone" href="/">NuGet Gallery Dashboard</a>
-            <a class="brand visible-phone" href="/">Dashboard</a>
+            <div id="master-status" class="hidden-phone" data-bind="text: masterStatus"></div>
+            <div id="site-menu">
+                <ul class="nav pull-right">
+                    @if(Model.IsAdmin) {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cogs"></i>
+                                <span class="hidden-phone">Admin</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="@Url.Action("ReloadConfig", "Home")">
+                                        <i class="icon-refresh"></i>
+                                        Reload Config
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-bind="click: previewUp">
+                                        <i class="icon-eye-open"></i>
+                                        Test "Up" Display
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-bind="click: previewWarning">
+                                        <i class="icon-eye-open"></i>
+                                        Test "Reduced" Display
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-bind="click: previewDown">
+                                        <i class="icon-eye-open"></i>
+                                        Test "Down" Display
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-bind="click: previewReset">
+                                        <i class="icon-eye-open"></i>
+                                        Reset Display
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("SignOut", "Home")">
+                                <i class="icon-signout"></i>
+                                <span class="hidden-phone">Logout @Model.User.DisplayName</span>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Model.LoginUrl">
+                                <i class="icon-signin"></i>
+                                <span class="hidden-phone">Administrator Login</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                <div class="pull-left">
+                    <a class="brand hidden-phone" href="/">NuGet Gallery Dashboard</a>
+                    <a class="brand visible-phone" href="/">Dashboard</a>
+                </div>
+            </div>
         </div>
     </nav>
 

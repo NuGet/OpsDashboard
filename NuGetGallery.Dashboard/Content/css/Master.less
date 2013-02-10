@@ -1,7 +1,113 @@
 ﻿@color-status-up: green;
 @color-status-warning: orange;
 @color-status-down: red;
+
+@color-masterstatus-up: lightgreen;
+@color-masterstatus-warning: yellow;
+@color-masterstatus-down: @color-status-down;
 @well-content-highlight-color: #e3e3e3;
+
+body {
+    font-family: 'Segoe UI', "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.statusHeader(@mainColor, @darkenby: 5%) {
+    background: @mainColor;
+    background-image: -moz-linear-gradient(top, @mainColor, darken(@mainColor, @darkenby));
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@mainColor), to(darken(@mainColor, @darkenby)));
+    background-image: -webkit-linear-gradient(top, @mainColor, darken(@mainColor, @darkenby));
+    background-image: -o-linear-gradient(top, @mainColor, darken(@mainColor, @darkenby));
+    background-image: linear-gradient(to bottom, @mainColor, darken(@mainColor, @darkenby));
+    
+    .brand
+    {
+        border: none;
+        -webkit-text-shadow: none;
+        text-shadow: none;
+    }
+
+    li > a
+    {
+        -webkit-text-shadow: none;
+        text-shadow: none;
+    }
+
+    li.dropdown.open > .dropdown-toggle
+    {
+        -webkit-text-shadow: none;
+        text-shadow: none;
+    }
+}
+.whiteStatusForeground()
+{
+    .brand
+    {
+        color: white;
+    }
+
+    li > a
+    {
+        color: white;
+    }
+
+    li.dropdown.open > .dropdown-toggle
+    {
+        color: #555555;
+    }
+
+    ul.dropdown-menu li > a
+    {
+        color: #333333;
+    }
+
+        ul.dropdown-menu li > a:hover
+        {
+            color: white;
+        }
+
+    li.dropdown > .dropdown-toggle .caret
+    {
+        border-top-color: white;
+        border-bottom-color: white;
+    }
+}
+
+#site-header {
+    .navbar-inner {
+    }
+    #master-status {
+        padding: 0.5em;
+        text-align: center;
+        font-size: 32pt;
+    }
+    #site-menu {
+        
+    }
+}
+
+body.site-up {
+    #site-header .navbar-inner {
+        .statusHeader(@color-masterstatus-up);
+        color: black;
+    }
+}
+
+body.site-warning {
+    #site-header .navbar-inner {
+        .statusHeader(@color-masterstatus-warning);
+        color: black;
+    }
+}
+
+body.site-down
+{
+    #site-header .navbar-inner
+    {
+        color: white;
+        .statusHeader(@color-masterstatus-down);
+        .whiteStatusForeground();
+    }
+}
 
 .bulletless()
 {

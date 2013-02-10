@@ -16,8 +16,8 @@ namespace NuGetGallery.Dashboard
 
             routes.MapRoute(
                 name: "EnvironmentMvc",
-                url: "{controller}/{name}/{action}",
-                defaults: new { action = "Show" }
+                url: "Environments/{name}/{action}",
+                defaults: new { action = "Show", controller = "Environments" }
             );
 
             routes.MapRoute(
@@ -25,7 +25,6 @@ namespace NuGetGallery.Dashboard
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
-
         }
     }
 }
