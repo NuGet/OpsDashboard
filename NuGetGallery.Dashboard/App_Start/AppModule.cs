@@ -39,6 +39,10 @@ namespace NuGetGallery.Dashboard.App_Start
                       .WithConstructorArgument("connectionString", ConfigurationManager.AppSettings["ConfigStorage"])
                       .WithConstructorArgument("container", ConfigurationManager.AppSettings["ConfigContainer"])
                       .WithConstructorArgument("localRoot", localRoot);
+
+                DeleteIfExists(Path.Combine(localRoot, "Environments.json"));
+                DeleteIfExists(Path.Combine(localRoot, "Connections.json"));
+                DeleteIfExists(Path.Combine(localRoot, "Authentication.json"));
             }
             else
             {
@@ -51,6 +55,13 @@ namespace NuGetGallery.Dashboard.App_Start
             SetupFederatedLogin();
 
             SetupPingers();
+        }
+
+        private void DeleteIfExists(string path)
+        {
+            if (File.Exists(path)) { 
+                File.Delete(path); 
+            }
         }
 
         private void SetupPingers()
@@ -76,7 +87,6 @@ namespace NuGetGallery.Dashboard.App_Start
             FederatedAuthentication.FederationConfigurationCreated += (sender, args) =>
             {
                 var config = Kernel.Get<IConfigurationService>();
-                config.Reload(force: true); // Force a full reload
                 var idconfig = new IdentityConfiguration();
                 idconfig.AudienceRestriction.AllowedAudienceUris.Add(new Uri(config.Auth.AudienceUrl));
 
