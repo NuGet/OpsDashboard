@@ -1,7 +1,9 @@
-﻿@model NuGetGallery.Dashboard.ViewModel.LayoutModel
-@using System.Web.Optimization
+﻿@using System.Web.Optimization
+@using Newtonsoft.Json
+@model NuGetGallery.Dashboard.ViewModel.LayoutModel
 @{
-
+    var clientModel = Model.GetClientModel();
+    var clientModelJson = clientModel == null ? null : JsonConvert.SerializeObject(clientModel, Formatting.None, Global.SerializerSettings);
 }
 
 <!DOCTYPE html>
@@ -11,11 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css/styles")
 </head>
-<body>
+<body data-model="@clientModelJson">
     <nav id="site-header" class="navbar navbar-static-top">
         <div class="navbar-inner">
             <ul class="nav pull-right">
-                @if(Request.IsAuthenticated) {
+                @if(Model.IsAdmin) {
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-cogs"></i>

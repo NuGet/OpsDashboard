@@ -33,6 +33,9 @@
                 <span data-bind="visible: !loading(), text: lastUpdatedString"></span>
                     <span data-bind="visible: loading">???</span>
                 </p>
+                @if(Model.IsAdmin) {
+                    <a class="btn btn-primary" data-bind="attr: { href: detailsUrl }"><i class="icon-stethoscope"></i> Full Status</a>
+                }
                 <button class="btn" data-bind="click: load"><i class="icon-refresh"></i> Refresh</button>
             </div>
         </div>

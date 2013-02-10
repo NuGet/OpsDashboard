@@ -10,9 +10,15 @@ namespace NuGetGallery.Dashboard.ViewModel
     {
         public string LoginUrl { get; set; }
         public UserSession User { get; set; }
+        public bool IsAdmin { get { return User != null && User.IsAdmin; } }
 
         public LayoutModel()
         {
+        }
+
+        public virtual object GetClientModel()
+        {
+            return null;
         }
     }
 }

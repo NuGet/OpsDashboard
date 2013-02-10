@@ -9,6 +9,8 @@ namespace NuGetGallery.Dashboard
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Formatters.JsonFormatter.SerializerSettings = Global.SerializerSettings;
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/v1/{controller}/{id}",

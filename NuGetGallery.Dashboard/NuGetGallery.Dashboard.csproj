@@ -162,12 +162,14 @@
     <Compile Include="App_Start\AppModule.cs" />
     <Compile Include="App_Start\BlobJsonConfigurationService.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\Global.cs" />
     <Compile Include="App_Start\NinjectWebApiDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\ServiceProvider.cs" />
     <Compile Include="Configuration\AuthenticationConfig.cs" />
     <Compile Include="Configuration\ConnectionsConfig.cs" />
     <Compile Include="Configuration\ConnectionString.cs" />
+    <Compile Include="Controllers\EnvironmentsController.cs" />
     <Compile Include="Model\DeploymentEnvironment.cs" />
     <Compile Include="Configuration\LocalJsonConfigurationService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -181,6 +183,7 @@
     <Compile Include="Services\PingResult.cs" />
     <Compile Include="Services\Pinger.cs" />
     <Compile Include="Services\Ping\UrlPinger.cs" />
+    <Compile Include="ViewModel\Environments\ShowViewModel.cs" />
     <Compile Include="ViewModel\Home\EnvironmentViewModel.cs" />
     <Compile Include="ViewModel\Home\IndexViewModel.cs" />
     <Compile Include="ViewModel\LayoutModel.cs" />
@@ -250,6 +253,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoadingWidget.cshtml" />
     <Content Include="Scripts\lib\jquery-1.9.1.min.map" />
+    <Content Include="Views\Environments\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,7 +26,7 @@
         return self;
     }
 
-    function EnvironmentViewModel(accessible, title, name, description, url) {
+    function EnvironmentViewModel(accessible, title, name, description, url, detailsUrl) {
         var self = {};
 
         self.domId = 'env_' + nextId++;
@@ -41,6 +41,10 @@
         self.firstFailed = ko.computed(function () {
             var ret = _.find(self.pingResults(), function (r) { return !r.result(); });
             return ret;
+        });
+
+        self.detailsUrl = ko.computed(function () {
+            return model.detailsUrlTemplate.replace(/__ENVNAME__/, self.name());
         });
 
         self.statusDetail = ko.computed(function () {
@@ -90,18 +94,18 @@
             self.loading(true);
             $.getJSON('/api/v1/environments/' + self.name(), function (data, status, xhr) {
                 if (data) {
-                    self.title(data.Title);
-                    self.name(data.Name);
-                    self.description(data.Description);
-                    self.url(data.Url);
+                    self.title(data.title);
+                    self.name(data.name);
+                    self.description(data.description);
+                    self.url(data.url);
                     self.pingResults.removeAll();
-                    for (var i = 0; i < data.PingResults.length; i++) {
+                    for (var i = 0; i < data.pingResults.length; i++) {
                         self.pingResults.push(
                             new PingResultViewModel(
-                                data.PingResults[i].Name, 
-                                data.PingResults[i].Detail, 
-                                data.PingResults[i].Target, 
-                                data.PingResults[i].Success));
+                                data.pingResults[i].name, 
+                                data.pingResults[i].detail, 
+                                data.pingResults[i].target, 
+                                data.pingResults[i].success));
                     }
                 } else {
                     alert('Error loading data from server: ' + status);
@@ -139,7 +143,13 @@
                             currentRow = new RowViewModel();
                             self.rows.push(currentRow);
                         }
-                        var environment = new EnvironmentViewModel(data[i].AccessibleFromDashboard, data[i].Title, data[i].Name, data[i].Description, data[i].Url);
+                        var environment = new EnvironmentViewModel(
+                            data[i].accessibleFromDashboard,
+                            data[i].title,
+                            data[i].name,
+                            data[i].description,
+                            data[i].url,
+                            data[i].detailsUrl);
                         currentRow.environments.push(environment);
                         setTimeout(environment.load, 0);
                         if (currentRow.environments().length == 3) {
@@ -157,7 +167,9 @@
         return self;
     }
 
+    var model = {};
     $(function () {
+        model = $(document.body).data().model;
         $('time').timeago();
         var viewModel = new PageViewModel();
         ko.applyBindings(viewModel);

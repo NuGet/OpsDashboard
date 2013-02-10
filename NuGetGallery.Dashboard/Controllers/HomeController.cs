@@ -22,11 +22,8 @@ namespace NuGetGallery.Dashboard.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-            return View(new IndexViewModel(Configuration.Environments.Values.Select(e => new EnvironmentViewModel() {
-                Name = e.Name,
-                Description = e.Description,
-                Url = e.Url
-            })));
+            return View(new IndexViewModel(
+                detailUrlTemplate: Url.Action("Show", "Environments", new { name = "__ENVNAME__" })));
         }
 
         [Authorize]

@@ -7,11 +7,16 @@ namespace NuGetGallery.Dashboard.ViewModel.Home
 {
     public class IndexViewModel : LayoutModel
     {
-        public IList<EnvironmentViewModel> Environments { get; private set; }
+        public string DetailUrlTemplate { get; private set; }
 
-        public IndexViewModel(IEnumerable<EnvironmentViewModel> environments)
+        public IndexViewModel(string detailUrlTemplate)
         {
-            Environments = environments.ToList();
+            DetailUrlTemplate = detailUrlTemplate;
+        }
+
+        public override object GetClientModel()
+        {
+            return new { detailsUrlTemplate = DetailUrlTemplate };
         }
     }
 }

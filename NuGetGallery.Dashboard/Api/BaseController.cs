@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Routing;
 using NuGetGallery.Dashboard.Configuration;
 using NuGetGallery.Dashboard.Services;
 using NuGetGallery.Dashboard.ViewModel;
