@@ -22,5 +22,6 @@ namespace NuGetGallery.Dashboard.Model
         public string Description { get; set; }
         public Uri Url { get; set; }
         public bool PubliclyVisible { get; set; }
+        public Uri OperationsStatusBlob { get; set; }
     }
 }

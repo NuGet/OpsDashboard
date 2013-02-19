@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NuGetGallery.Dashboard.Model;
 
 namespace NuGetGallery.Dashboard.Configuration
@@ -60,22 +61,39 @@ namespace NuGetGallery.Dashboard.Configuration
 
         private void LoadConnections(string path)
         {
+            _connections = new ConnectionsConfig();
             if (File.Exists(path))
             {
                 // Load the JSON
-                // HACK: The dictionary key -> name thing could be done cleaner, but I'm lazy
-                var connections = JsonConvert.DeserializeObject<IDictionary<string, ConnectionString>>(
-                    File.ReadAllText(path));
-                foreach (var pair in connections)
+                var root = JObject.Parse(File.ReadAllText(path));
+
+                foreach (var type in root.Properties().Select(LoadConnectionType))
                 {
-                    pair.Value.Name = pair.Key;
+                    _connections.ConnectionTypes.Add(type);
                 }
-                _connections = new ConnectionsConfig(connections.ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.OrdinalIgnoreCase));
             }
-            else
+        }
+
+        private static ConnectionType LoadConnectionType(JProperty prop)
+        {
+            var type = new ConnectionType(prop.Name);
+            if (prop.Value.Type == JTokenType.Object)
             {
-                _connections = new ConnectionsConfig();
+                foreach (var str in ((JObject)prop.Value).Properties().Select(LoadConnectionString))
+                {
+                    type.ConnectionStrings.Add(str);
+                }
             }
+            return type;
+        }
+
+        private static ConnectionString LoadConnectionString(JProperty prop)
+        {
+            if (prop.Value.Type != JTokenType.String)
+            {
+                throw new InvalidDataException(String.Format("Expected a string for property '{0}'", prop.Name));
+            }
+            return new ConnectionString(prop.Name, (string) prop.Value);
         }
 
         private void LoadAuth(string path)

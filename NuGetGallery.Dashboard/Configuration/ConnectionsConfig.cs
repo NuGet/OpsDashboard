@@ -1,30 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using Microsoft.WindowsAzure.Storage;
 
 namespace NuGetGallery.Dashboard.Configuration
 {
     public class ConnectionsConfig
     {
-        private readonly IDictionary<string, ConnectionString> _connectionStrings;
+        public ConnectionTypeCollection ConnectionTypes { get; private set; } 
 
-        public IDictionary<string, ConnectionString> ConnectionStrings { get { return _connectionStrings; } }
-
-        public ConnectionsConfig() : this(new Dictionary<string, ConnectionString>(StringComparer.OrdinalIgnoreCase)) { }
-        public ConnectionsConfig(IDictionary<string, ConnectionString> connectionStrings)
+        public ConnectionsConfig()
         {
-            _connectionStrings = connectionStrings;
+            ConnectionTypes = new ConnectionTypeCollection();
         }
 
-        public T Connect<T>(string connectionStringName) where T : class
+        public CloudStorageAccount ConnectAzureStorage(Uri url)
         {
-            ConnectionString str = null;
-            if (!_connectionStrings.TryGetValue(connectionStringName, out str))
+            // Check for a connection type matching the scheme
+            if (!ConnectionTypes.Contains(url.Scheme))
             {
-                throw new KeyNotFoundException("No such connection string '" + connectionStringName + "'");
+                throw new InvalidOperationException(String.Format("Unknown scheme '{0}'", url.Scheme));
             }
-            return str.Connect<T>();
+            ConnectionType type = ConnectionTypes[url.Scheme];
+            if (!type.ConnectionStrings.Contains(url.Host))
+            {
+                throw new KeyNotFoundException(String.Format("No connection string for '{0}'", url.Host));
+            }
+            return CloudStorageAccount.Parse(type.ConnectionStrings[url.Host].Value);
         }
     }
 }
