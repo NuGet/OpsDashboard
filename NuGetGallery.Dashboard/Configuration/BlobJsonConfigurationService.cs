@@ -8,25 +8,24 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using NuGetGallery.Dashboard.Configuration;
 
-namespace NuGetGallery.Dashboard.App_Start
+namespace NuGetGallery.Dashboard.Configuration
 {
     public class BlobJsonConfigurationService : LocalJsonConfigurationService
     {
         private CloudStorageAccount _account;
         private string _containerName;
 
-        public BlobJsonConfigurationService(string connectionString, string container, string localRoot)
-            : base(localRoot)
+        public BlobJsonConfigurationService(ISecretsService secrets)
+            : base(secrets)
         {
-            _account = CloudStorageAccount.Parse(connectionString);
-            _containerName = container;
+            _account = CloudStorageAccount.Parse(secrets.GetSetting("Configuration.Connection"));
+            _containerName = secrets.GetSetting("Configuration.Container");
         }
 
         public override void Reload(bool force)
         {
             if (force || 
                 !File.Exists(Path.Combine(Root, "Environments.json")) || 
-                !File.Exists(Path.Combine(Root, "Connections.json")) || 
                 !File.Exists(Path.Combine(Root, "Authentication.json")))
             {
                 try
@@ -36,12 +35,10 @@ namespace NuGetGallery.Dashboard.App_Start
 
                     // Get the blobs
                     var envBlob = container.GetBlockBlobReference("Environments.json");
-                    var connBlob = container.GetBlockBlobReference("Connections.json");
                     var authBlob = container.GetBlockBlobReference("Authentication.json");
 
                     // Download any that exist
                     DownloadIfExists(envBlob);
-                    DownloadIfExists(connBlob);
                     DownloadIfExists(authBlob);
                 }
                 catch (Exception ex)

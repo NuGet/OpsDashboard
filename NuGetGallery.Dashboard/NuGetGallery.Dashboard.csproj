@@ -162,20 +162,19 @@
     <Compile Include="Api\Model\OperationsStatus.cs" />
     <Compile Include="Api\OpsStatusController.cs" />
     <Compile Include="App_Start\AppModule.cs" />
-    <Compile Include="App_Start\BlobJsonConfigurationService.cs" />
+    <Compile Include="Configuration\BlobJsonConfigurationService.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Global.cs" />
     <Compile Include="App_Start\NinjectWebApiDependencyResolver.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\ServiceProvider.cs" />
     <Compile Include="Configuration\AuthenticationConfig.cs" />
-    <Compile Include="Configuration\ConnectionsConfig.cs" />
-    <Compile Include="Configuration\ConnectionString.cs" />
-    <Compile Include="Configuration\ConnectionStringCollection.cs" />
-    <Compile Include="Configuration\ConnectionType.cs" />
-    <Compile Include="Configuration\ConnectionTypeCollection.cs" />
+    <Compile Include="Configuration\WebConfigSecretsService.cs" />
+    <Compile Include="Configuration\ISecretsService.cs" />
     <Compile Include="Controllers\EnvironmentsController.cs" />
     <Compile Include="Infrastructure\AzureStorageExtensions.cs" />
+    <Compile Include="Infrastructure\BlobConfigurationServiceExtensions.cs" />
+    <Compile Include="Infrastructure\DashboardSessionAuthenticationModule.cs" />
     <Compile Include="Model\DeploymentEnvironment.cs" />
     <Compile Include="Configuration\LocalJsonConfigurationService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -285,7 +284,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>25734</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44300/</IISUrl>
+          <IISUrl>http://localhost:20202</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

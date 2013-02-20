@@ -12,29 +12,42 @@ namespace NuGetGallery.Dashboard.Configuration
     public class LocalJsonConfigurationService : IConfigurationService
     {
         private AuthenticationConfig _auth;
-        private ConnectionsConfig _connections;
         private IDictionary<string, DeploymentEnvironment> _envs;
+        private ISecretsService _secrets;
 
         public string Root { get; private set; }
         public AuthenticationConfig Auth { get { EnsureLoaded(); return _auth; } }
-        public ConnectionsConfig Connections { get { EnsureLoaded(); return _connections; } }
         public IDictionary<string, DeploymentEnvironment> Environments { get { EnsureLoaded(); return _envs; } }
 
-        public LocalJsonConfigurationService(string root)
+        public LocalJsonConfigurationService(ISecretsService secrets)
         {
-            Root = root;
+            _secrets = secrets;
+            Root = _secrets.GetSetting("Configuration.Path");
+
+            if (String.IsNullOrEmpty(Root))
+            {
+                Root = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data");
+            }
         }
 
         public virtual void Reload(bool force)
         {
             LoadAuth(Path.Combine(Root, "Authentication.json"));
-            LoadConnections(Path.Combine(Root, "Connections.json"));
             LoadEnvironments(Path.Combine(Root, "Environments.json"));
+        }
+
+        public string GetConnectionString(string environment, string type, string name)
+        {
+            // Construct a secret name
+            string secretName = String.Format("Connections.{0}.{1}.{2}", environment, type, name);
+
+            // Try getting it from the secret service (pun intended)
+            return _secrets.GetSetting(secretName);
         }
 
         private void EnsureLoaded()
         {
-            if (_auth == null || _connections == null || _envs == null)
+            if (_auth == null || _envs == null)
             {
                 Reload(false);
             }
@@ -57,43 +70,6 @@ namespace NuGetGallery.Dashboard.Configuration
             {
                 _envs = new Dictionary<string, DeploymentEnvironment>();
             }
-        }
-
-        private void LoadConnections(string path)
-        {
-            _connections = new ConnectionsConfig();
-            if (File.Exists(path))
-            {
-                // Load the JSON
-                var root = JObject.Parse(File.ReadAllText(path));
-
-                foreach (var type in root.Properties().Select(LoadConnectionType))
-                {
-                    _connections.ConnectionTypes.Add(type);
-                }
-            }
-        }
-
-        private static ConnectionType LoadConnectionType(JProperty prop)
-        {
-            var type = new ConnectionType(prop.Name);
-            if (prop.Value.Type == JTokenType.Object)
-            {
-                foreach (var str in ((JObject)prop.Value).Properties().Select(LoadConnectionString))
-                {
-                    type.ConnectionStrings.Add(str);
-                }
-            }
-            return type;
-        }
-
-        private static ConnectionString LoadConnectionString(JProperty prop)
-        {
-            if (prop.Value.Type != JTokenType.String)
-            {
-                throw new InvalidDataException(String.Format("Expected a string for property '{0}'", prop.Name));
-            }
-            return new ConnectionString(prop.Name, (string) prop.Value);
         }
 
         private void LoadAuth(string path)

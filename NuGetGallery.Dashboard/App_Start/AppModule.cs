@@ -28,29 +28,22 @@ namespace NuGetGallery.Dashboard.App_Start
         public override void Load()
         {
             // Initialize Config
-            var configMode = ConfigurationManager.AppSettings["ConfigMode"];
-            var localRoot = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data");
-            if (String.Equals(configMode, "blob", StringComparison.OrdinalIgnoreCase) &&
-                !String.IsNullOrEmpty(ConfigurationManager.AppSettings["ConfigStorage"]) &&
-                !String.IsNullOrEmpty(ConfigurationManager.AppSettings["ConfigContainer"]))
+            Kernel.Bind<ISecretsService>()
+                  .To<WebConfigSecretsService>()
+                  .InSingletonScope();
+
+            var configMode = ConfigurationManager.AppSettings["Configuration.Mode"];
+            if (String.Equals(configMode, "blob", StringComparison.OrdinalIgnoreCase))
             {
                 Kernel.Bind<IConfigurationService>()
                       .To<BlobJsonConfigurationService>()
-                      .InSingletonScope()
-                      .WithConstructorArgument("connectionString", ConfigurationManager.AppSettings["ConfigStorage"])
-                      .WithConstructorArgument("container", ConfigurationManager.AppSettings["ConfigContainer"])
-                      .WithConstructorArgument("localRoot", localRoot);
-
-                DeleteIfExists(Path.Combine(localRoot, "Environments.json"));
-                DeleteIfExists(Path.Combine(localRoot, "Connections.json"));
-                DeleteIfExists(Path.Combine(localRoot, "Authentication.json"));
+                      .InSingletonScope();
             }
             else
             {
                 Kernel.Bind<IConfigurationService>()
                       .To<LocalJsonConfigurationService>()
-                      .InSingletonScope()
-                      .WithConstructorArgument("root", localRoot);
+                      .InSingletonScope();
             }
 
             SetupFederatedLogin();
