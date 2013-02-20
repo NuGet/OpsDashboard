@@ -1,4 +1,5 @@
-﻿@model NuGetGallery.Dashboard.ViewModel.Environments.ShowViewModel
+﻿@using System.Web.Optimization
+@model NuGetGallery.Dashboard.ViewModel.Environments.ShowViewModel
 @{
     ViewBag.Title = "View";
 }
@@ -6,4 +7,33 @@
 <div class="page-header">
     <h1>@Model.EnvironmentTitle <small class="hidden-phone">Detailed Status</small></h1>
 </div>
-<p>Nothing to see here. Yet...</p>
+
+<h2>Latest Operations Updates</h2>
+
+@Html.Partial("_LoadingWidget")
+
+<table class="table" data-bind="ifnot: loading">
+    <thead>
+        <tr>
+            <th>Job</th>
+            <th>Last Status Update</th>
+            <th>Result</th>
+            <th>Message</th>
+            <th>Duration</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: jobs">
+        <tr data-bind="with: latestStatus">
+            <td data-bind="text: job().name"></td>
+            <td data-bind="text: timestamp"></td>
+            <td data-bind="text: status"></td>
+            <td data-bind="text: message"></td>
+            <td data-bind="text: duration"></td>
+        </tr>
+    </tbody>
+</table>
+<button class="btn btn-primary" data-bind="click: load"><i class="icon-refresh"></i> Refresh</button>
+
+@section BottomScripts {
+    @Scripts.Render("~/Scripts/app/environments/show.js")
+}

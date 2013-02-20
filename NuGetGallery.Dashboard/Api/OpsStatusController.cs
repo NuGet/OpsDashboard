@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.WindowsAzure.Storage;
@@ -16,7 +19,7 @@ namespace NuGetGallery.Dashboard.Api
         public OpsStatusController(IConfigurationService configuration) : base(configuration) { }
 
         [Authorize(Roles = "Administrator")]
-        public async Task<string> Get(string id)
+        public async Task<HttpResponseMessage> Get(string id)
         {
             // Get the environment
             DeploymentEnvironment env;
@@ -32,7 +35,9 @@ namespace NuGetGallery.Dashboard.Api
             string json = await blob.DownloadToString();
 
             // For now, return it
-            return json;
+            var resp = new HttpResponseMessage(HttpStatusCode.OK);
+            resp.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            return resp;
         }
     }
 }

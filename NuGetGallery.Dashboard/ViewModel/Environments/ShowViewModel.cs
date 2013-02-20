@@ -9,5 +9,10 @@ namespace NuGetGallery.Dashboard.ViewModel.Environments
     {
         public string EnvironmentName { get; set; }
         public string EnvironmentTitle { get; set; }
+
+        public override object GetClientModel()
+        {
+            return new { EnvironmentName, EnvironmentTitle };
+        }
     }
 }

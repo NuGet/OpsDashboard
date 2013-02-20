@@ -13,10 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css/styles")
 </head>
-<body data-model="@clientModelJson" data-bind="css: { 'site-up': statusReady() && isUp(), 'site-warning': statusReady() && !isUp() && !isDown(), 'site-down': statusReady() && isDown() }">
+<body data-model="@clientModelJson">
     <nav id="site-header" class="navbar navbar-static-top">
         <div class="navbar-inner">
-            <div id="master-status" class="hidden-phone" data-bind="text: masterStatus"></div>
             <div id="site-menu">
                 <ul class="nav pull-right">
                     @if(Model.IsAdmin) {
@@ -31,30 +30,6 @@
                                     <a href="@Url.Action("ReloadConfig", "Home")">
                                         <i class="icon-refresh"></i>
                                         Reload Config
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bind="click: previewUp">
-                                        <i class="icon-eye-open"></i>
-                                        Test "Up" Display
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bind="click: previewWarning">
-                                        <i class="icon-eye-open"></i>
-                                        Test "Reduced" Display
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bind="click: previewDown">
-                                        <i class="icon-eye-open"></i>
-                                        Test "Down" Display
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-bind="click: previewReset">
-                                        <i class="icon-eye-open"></i>
-                                        Reset Display
                                     </a>
                                 </li>
                             </ul>
@@ -89,6 +64,7 @@
     </div>
     
     @Scripts.Render("~/Scripts/lib/script")
-    @RenderSection("BottomScripts", required: false);
+    @Scripts.Render("~/Scripts/app/main.js")
+    @RenderSection("BottomScripts", required: false)
 </body>
 </html>

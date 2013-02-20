@@ -219,11 +219,6 @@
             setTimeout(self.load, refreshInterval);
         }
 
-        self.previewDown = function () { self.overrideStatus('Down'); }
-        self.previewUp = function () { self.overrideStatus('Up'); }
-        self.previewWarning = function () { self.overrideStatus('Warning'); }
-        self.previewReset = function () { self.overrideStatus(''); }
-
         return self;
     }
 
@@ -231,9 +226,8 @@
     var viewModel = {};
     $(function () {
         model = $(document.body).data().model;
-        $('time').timeago();
         viewModel = new PageViewModel();
-        ko.applyBindings(viewModel);
+        app.bind(viewModel);
         setTimeout(viewModel.load, 0);
     });
 })(jQuery, window);

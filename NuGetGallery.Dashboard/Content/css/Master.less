@@ -11,65 +11,13 @@ body {
     font-family: 'Segoe UI', "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.statusHeader(@mainColor, @darkenby: 5%) {
+.gradiantBackground(@mainColor, @darkenby: 5%) {
     background: @mainColor;
     background-image: -moz-linear-gradient(top, @mainColor, darken(@mainColor, @darkenby));
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@mainColor), to(darken(@mainColor, @darkenby)));
     background-image: -webkit-linear-gradient(top, @mainColor, darken(@mainColor, @darkenby));
     background-image: -o-linear-gradient(top, @mainColor, darken(@mainColor, @darkenby));
     background-image: linear-gradient(to bottom, @mainColor, darken(@mainColor, @darkenby));
-    
-    .brand
-    {
-        border: none;
-        -webkit-text-shadow: none;
-        text-shadow: none;
-    }
-
-    li > a
-    {
-        -webkit-text-shadow: none;
-        text-shadow: none;
-    }
-
-    li.dropdown.open > .dropdown-toggle
-    {
-        -webkit-text-shadow: none;
-        text-shadow: none;
-    }
-}
-.whiteStatusForeground()
-{
-    .brand
-    {
-        color: white;
-    }
-
-    li > a
-    {
-        color: white;
-    }
-
-    li.dropdown.open > .dropdown-toggle
-    {
-        color: #555555;
-    }
-
-    ul.dropdown-menu li > a
-    {
-        color: #333333;
-    }
-
-        ul.dropdown-menu li > a:hover
-        {
-            color: white;
-        }
-
-    li.dropdown > .dropdown-toggle .caret
-    {
-        border-top-color: white;
-        border-bottom-color: white;
-    }
 }
 
 #site-header {
@@ -85,27 +33,33 @@ body {
     }
 }
 
-body.site-up {
-    #site-header .navbar-inner {
-        .statusHeader(@color-masterstatus-up);
-        color: black;
-    }
-}
-
-body.site-warning {
-    #site-header .navbar-inner {
-        .statusHeader(@color-masterstatus-warning);
-        color: black;
-    }
-}
-
-body.site-down
+#site-status
 {
-    #site-header .navbar-inner
+    padding: 0;
+    padding: 0.1em;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    border: 1px solid silver;
+
+    &.site-up
     {
+        .gradiantBackground(@color-masterstatus-up);
+        color: black;
+    }
+
+    &.site-warning
+    {
+        .gradiantBackground(@color-masterstatus-warning);
+        color: black;
+    }
+
+    &.site-down
+    {
+        .gradiantBackground(@color-masterstatus-down);
         color: white;
-        .statusHeader(@color-masterstatus-down);
-        .whiteStatusForeground();
+        small {
+            color:white
+        }
     }
 }
 

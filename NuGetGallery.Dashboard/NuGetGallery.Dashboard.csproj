@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -172,9 +173,9 @@
     <Compile Include="Configuration\WebConfigSecretsService.cs" />
     <Compile Include="Configuration\ISecretsService.cs" />
     <Compile Include="Controllers\EnvironmentsController.cs" />
+    <Compile Include="Infrastructure\ApiAwareWSFederationAuthenticationModule.cs" />
     <Compile Include="Infrastructure\AzureStorageExtensions.cs" />
     <Compile Include="Infrastructure\BlobConfigurationServiceExtensions.cs" />
-    <Compile Include="Infrastructure\DashboardSessionAuthenticationModule.cs" />
     <Compile Include="Model\DeploymentEnvironment.cs" />
     <Compile Include="Configuration\LocalJsonConfigurationService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -225,12 +226,14 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Content\css\Master.less" />
+    <Content Include="Scripts\app\environments\show.js" />
     <Content Include="Scripts\app\home.js" />
     <Content Include="Content\font\fontawesome-webfont.woff" />
     <Content Include="Content\font\fontawesome-webfont.ttf" />
     <Content Include="Content\font\fontawesome-webfont.eot" />
     <Content Include="Content\font\FontAwesome.otf" />
     <None Include="Scripts\lib\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\lib\jquery-1.9.1.js" />
     <Content Include="Scripts\lib\jquery-1.9.1.min.js" />
     <Content Include="Scripts\lib\jquery.timeago.js" />

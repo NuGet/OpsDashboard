@@ -2,7 +2,6 @@ _ReSharper*
 bin
 Bin
 obj
-App_Data
 *.user
 *.patch
 *.hg

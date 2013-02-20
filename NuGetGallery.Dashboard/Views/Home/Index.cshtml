@@ -4,11 +4,9 @@
     ViewBag.Title = "Home";
 }
 
-<div class="page-header">
-    <h1>Current Status <small class="hidden-phone">Is NuGet.org up?</small></h1>
+<div id="site-status" class="page-header" data-bind="css: { 'site-up': statusReady() && isUp(), 'site-warning': statusReady() && !isUp() && !isDown(), 'site-down': statusReady() && isDown() }">
+    <h1>Current Status <small data-bind="text: masterStatus" class="hidden-phone"></small></h1>
 </div>
-
-@Html.Partial("_LoadingWidget")
 
 <div data-bind="if: !loading()">
     <!-- ko foreach: rows -->
