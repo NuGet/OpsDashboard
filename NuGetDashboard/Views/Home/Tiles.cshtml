@@ -1,0 +1,93 @@
+﻿<div class="grid grid-pad" id="title1">
+    <div class="col-1-2">
+        <div class="content">
+            <h2 style="font-family: 'Trebuchet MS'"><em>Live Site Monitoring</em></h2>
+        </div>
+    </div>
+    <div class="col-1-2">
+        <div class="content">
+            <h2 style="font-family: 'Trebuchet MS'"><em>Trending</em></h2>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-pad">
+    <div class="col-1-2">
+        <div class="content">
+            @Html.Action("Index", "SLA")
+            @Html.Action("Index", "UpTime")
+        </div>
+    </div>
+    <div class="col-1-2">
+        <div class="content">
+
+            <div class="tile bg-color-blue" data-role="tile-slider" data-param-period="10000" onclick="ShowDetails('Details','Trending');">
+
+                <div class="tile-content">
+                    <h2>New Packages</h2>
+                    <div class="brand">
+                        <div class="badge">420</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tile bg-color-blue">
+            <div class="tile-content" onclick="ShowDetails('Details','Trending');">
+                <h2>New Visitors</h2>
+            </div>
+            <div class="brand">
+                <div class="badge">2000</div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+<div class="grid grid-pad">
+    <div class="col-1-2">
+        <div class="content">
+            <h2 style="font-family: 'Trebuchet MS'"><em>Internal Diagnostics</em></h2>
+        </div>
+    </div>
+    <div class="col-1-2">
+        <div class="content">
+            <h2 style="font-family: 'Trebuchet MS'"><em>Team stats</em></h2>
+        </div>
+    </div>
+</div>
+
+
+<div class="grid grid-pad">
+    <div class="col-1-2">
+        <div class="content">
+            @Html.Action("Index", "WorkerJobs");
+                   @Html.Action("Index", "ResourceMonitoring");         
+              
+        </div>
+    </div>
+
+    <div class="col-1-2">
+        <div class="content">
+            <div class="tile bg-color-blue">
+                <div class="tile-content" onclick="ShowDetails('Details','SupportRequests');">
+                    <h2>Support requests</h2>
+                </div>
+                <div class="brand">
+                    <div class="badge">7</div>
+                </div>
+            </div>
+            <div class="tile bg-color-blue">
+                <div class="tile-content">
+                    <h2>GitHub</h2>
+                </div>
+                <div class="brand">
+                    <div class="badge">8</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,14 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E229A174-1E3C-42C6-9BAA-1F61DE5083A7}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetGallery.Dashboard", "NuGetGallery.Dashboard\NuGetGallery.Dashboard.csproj", "{5E1773E3-C874-4FE0-9014-6AB84DE4F316}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGetDashboard", "NuGetDashboard\NuGetDashboard.csproj", "{D4A54233-0D51-4551-8290-16A95DDA1E94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E1773E3-C874-4FE0-9014-6AB84DE4F316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4A54233-0D51-4551-8290-16A95DDA1E94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4A54233-0D51-4551-8290-16A95DDA1E94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4A54233-0D51-4551-8290-16A95DDA1E94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4A54233-0D51-4551-8290-16A95DDA1E94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

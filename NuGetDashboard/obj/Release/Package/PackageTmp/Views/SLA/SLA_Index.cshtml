@@ -1,0 +1,35 @@
+﻿
+ <script type="text/javascript">  
+     function GetSLAStatusUpdate() {
+         debugger
+     $.ajax({
+        
+                      url: '@Url.Action("GetStatus", "SLA")',
+                      type: "GET",
+                      dataType: 'json',                   
+                      success: function (result) {
+                          for (var a = 0; a <= 8 ; a++) {                              
+                              var element = document.getElementById(result[a].Id);
+                              if (element != null) {
+                                  element.innerHTML =  "<h2>" + result[a].name + " </h2> <br/><h1> " + result[a].formatted_metric_value + "</h1> ";                                
+                              }
+                          }   
+                          window.setTimeout(GetSLAStatusUpdate, 1000 * 60 * 3);
+                      }
+                  });
+              };     
+  </script>
+<div class="tile" data-role="tile-slider" data-param-period="2000" id="SLAdiv" onclick="ShowDetails('Details','SLA');" >
+                                    <div id="Response Time" class="tile-content bg-color-green" >       
+                                        <h1>Response Time</h1> <br /> 
+                                        <div class="badge">70 ms</div>                                                                 
+                                    </div>
+                                    <div id="Throughput" class="tile-content bg-color-green">    
+                                         <h1>Throughput</h1> <br /> 
+                                        <div class="badge">1000 rpm</div>                               
+                                    </div>  
+                                     <div id="Apdex" class="tile-content bg-color-green"> 
+                                         <h1>Apdex</h1> <br /> 
+                                        <div class="badge">0.96</div>   
+                                    </div>               
+ </div>
